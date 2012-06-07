@@ -45,3 +45,12 @@ FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 You should have received a copy of the GNU General Public License along with 
 com.nuscomputing.ivlelapi. If not, see <http://www.gnu.org/licenses/>.
 
+com.nuscomputing.ivlelapi uses the Jackson JSON Processor, a multi-purpose Java
+library for processing JSON data format. Jackson JSON Processor is licensed under
+the Lesser GNU General Public License (LGPL). See [here](http://wiki.fasterxml.com/JacksonHome)
+for more information.
+
+com.nuscomputing.ivlelapi uses Joda-Time, a quality replacement for the Java date
+and time classes. Joda-Time is licensed under the Apache License Version 2.0. See
+[here](http://joda-time.sourceforge.net/) for more information.
+
