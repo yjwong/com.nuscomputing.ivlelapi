@@ -1,5 +1,6 @@
 package com.nuscomputing.ivlelapi;
 
+import java.util.List;
 import java.util.Map;
 
 import org.joda.time.DateTime;
@@ -35,7 +36,7 @@ public class Webcast extends IVLEObject {
 		this.ivle = ivle;
 		
 		// Read data from JSON.
-		this.map = null;
+		this.map = map;
 		this.badgeTool = extractInt("BadgeTool", map);
 		this.creator = new User(this.ivle, (Map<?, ?>) map.get("Creator"));
 		this.ID = extractString("ID", map);
@@ -48,18 +49,13 @@ public class Webcast extends IVLEObject {
 	 * Gets the item groups for the webcasts.
 	 */
 	public Webcast.ItemGroup[] getItemGroups() throws Exception {
-		// Create a new XPath object.
-//		XPath xpath = XPathFactory.newInstance().newXPath();
-//		NodeList itemGroupList = (NodeList) xpath.evaluate("ItemGroups/Data_Webcast_ItemGroup", this.node, XPathConstants.NODESET);
-//		
-//		// Run through the moduleList, generating a new Module each iteration.
-//		Webcast.ItemGroup[] m = new Webcast.ItemGroup[itemGroupList.getLength()];
-//		for (int i = 0; i < itemGroupList.getLength(); i++) {
-//			m[i] = new Webcast.ItemGroup(this.ivle, itemGroupList.item(i));
-//		}
-//		
-//		return m;
-		return null;
+		List<?> itemGroupList = (List<?>) this.map.get("ItemGroups");
+		ItemGroup[] itemGroups = new ItemGroup[itemGroupList.size()];
+		for (int i = 0; i < itemGroupList.size(); i++) {
+			itemGroups[i] = new ItemGroup(this.ivle, (Map<?, ?>) itemGroupList.get(i));
+		}
+		
+		return itemGroups;
 	}
 	
 	// }}}
@@ -102,18 +98,13 @@ public class Webcast extends IVLEObject {
 		 * Gets the files associated with this item group.
 		 */
 		public Webcast.File[] getFiles() throws Exception {
-			// Create a new XPath object.
-//			XPath xpath = XPathFactory.newInstance().newXPath();
-//			NodeList fileList = (NodeList) xpath.evaluate("Files/Data_Webcast_File", this.node, XPathConstants.NODESET);
-//			
-//			// Run through the moduleList, generating a new Module each iteration.
-//			Webcast.File[] f = new Webcast.File[fileList.getLength()];
-//			for (int i = 0; i < fileList.getLength(); i++) {
-//				f[i] = new Webcast.File(this.ivle, fileList.item(i));
-//			}
-//			
-//			return f;
-			return null;
+			List<?> fileList = (List<?>) this.map.get("Files");
+			File[] files = new File[fileList.size()];
+			for (int i = 0; i < fileList.size(); i++) {
+				files[i] = new File(this.ivle, (Map<?, ?>) fileList.get(i));
+			}
+			
+			return files;
 		}
 		
 		/**
@@ -121,18 +112,13 @@ public class Webcast extends IVLEObject {
 		 * Gets the item groups for the webcasts.
 		 */
 		public Webcast.ItemGroup[] getItemGroups() throws Exception {
-			// Create a new XPath object.
-//			XPath xpath = XPathFactory.newInstance().newXPath();
-//			NodeList itemGroupList = (NodeList) xpath.evaluate("ItemGroups/Data_Webcast_ItemGroup", this.node, XPathConstants.NODESET);
-//			
-//			// Run through the moduleList, generating a new Module each iteration.
-//			Webcast.ItemGroup[] m = new Webcast.ItemGroup[itemGroupList.getLength()];
-//			for (int i = 0; i < itemGroupList.getLength(); i++) {
-//				m[i] = new Webcast.ItemGroup(this.ivle, itemGroupList.item(i));
-//			}
-//			
-//			return m;
-			return null;
+			List<?> itemGroupList = (List<?>) this.map.get("ItemGroups");
+			ItemGroup[] itemGroups = new ItemGroup[itemGroupList.size()];
+			for (int i = 0; i < itemGroupList.size(); i++) {
+				itemGroups[i] = new ItemGroup(this.ivle, (Map<?, ?>) itemGroupList.get(i));
+			}
+			
+			return itemGroups;
 		}
 		
 		// }}}
