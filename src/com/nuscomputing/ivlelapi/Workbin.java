@@ -1,7 +1,9 @@
 package com.nuscomputing.ivlelapi;
 
 import java.io.BufferedInputStream;
+import java.io.IOException;
 import java.io.InputStream;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
 import java.util.Map;
@@ -54,7 +56,7 @@ public class Workbin extends IVLEObject {
 	/**
 	 * Method: getFolders
 	 */
-	public Workbin.Folder[] getFolders() throws Exception {
+	public Workbin.Folder[] getFolders() {
 		// Get the list of folders.
 		List<?> folderList = (List<?>) this.map.get("Folders");
 		Folder[] f = new Folder[folderList.size()];
@@ -138,7 +140,7 @@ public class Workbin extends IVLEObject {
 		 * 
 		 * @return Workbin.File[]
 		 */
-		public Workbin.File[] getFiles() throws Exception {
+		public Workbin.File[] getFiles() {
 			// Get the list of files.
 			List<?> fileList = (List<?>) this.map.get("Files");
 			File[] f = new File[fileList.size()];
@@ -157,7 +159,7 @@ public class Workbin extends IVLEObject {
 		 * 
 		 * @return Workbin.Folder[]
 		 */
-		public Workbin.Folder[] getFolders() throws Exception {
+		public Workbin.Folder[] getFolders() {
 			// Get the list of folders.
 			List<?> folderList = (List<?>) this.map.get("Folders");
 			Folder[] f = new Folder[folderList.size()];
@@ -211,7 +213,7 @@ public class Workbin extends IVLEObject {
 		// }}}
 		// {{{ methods
 		
-		File(IVLE ivle, Map<?, ?> map) throws Exception {
+		File(IVLE ivle, Map<?, ?> map) {
 			// Set our IVLE object.
 			this.ivle = ivle;
 			
@@ -234,7 +236,7 @@ public class Workbin extends IVLEObject {
 		 * 
 		 * @return URL
 		 */
-		public URL getDownloadURL() throws Exception {
+		public URL getDownloadURL() throws MalformedURLException {
 			// Check for sanity.
 			if (this.ivle.apiKey == null || this.ivle.authToken == null) {
 				throw new IllegalStateException();
@@ -254,7 +256,8 @@ public class Workbin extends IVLEObject {
 		 * Method: download
 		 * Downloads the specified file.
 		 */
-		public InputStream download() throws Exception {
+		public InputStream download() throws MalformedURLException, 
+				IOException {
 			// Get the URL.
 			URL wburl = this.getDownloadURL();
 			
