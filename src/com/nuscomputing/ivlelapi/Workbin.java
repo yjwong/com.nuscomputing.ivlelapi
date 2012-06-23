@@ -55,6 +55,10 @@ public class Workbin extends IVLEObject {
 	
 	/**
 	 * Method: getFolders
+	 * <p>
+	 * Returns the list of folders in this workbin.
+	 * 
+	 * @return Workbin.Folder[]
 	 */
 	public Workbin.Folder[] getFolders() {
 		// Get the list of folders.
@@ -136,7 +140,9 @@ public class Workbin extends IVLEObject {
 		
 		/**
 		 * Method: getFiles
-		 * Retrieves the files within this folder.
+		 * <p>
+		 * Returns an array of workbin file objects corresponding to files
+		 * found in this workbin folder.
 		 * 
 		 * @return Workbin.File[]
 		 */
@@ -155,7 +161,8 @@ public class Workbin extends IVLEObject {
 		
 		/**
 		 * Method: getFolders
-		 * Retrieves the folders within this folder.
+		 * <p>
+		 * Returns the list of folders in this workbin folder.
 		 * 
 		 * @return Workbin.Folder[]
 		 */
@@ -232,6 +239,7 @@ public class Workbin extends IVLEObject {
 		
 		/**
 		 * Method: getDownloadURL
+		 * <p>
 		 * Obtains the URL for file download.
 		 * 
 		 * @return URL
@@ -254,7 +262,12 @@ public class Workbin extends IVLEObject {
 		
 		/**
 		 * Method: download
-		 * Downloads the specified file.
+		 * <p>
+		 * Returns an InputStream corresponding to the file to be downloaded.
+		 * 
+		 * @return InputStream
+		 * @throws MalformedURLException
+		 * @throws IOException
 		 */
 		public InputStream download() throws MalformedURLException, 
 				IOException {
