@@ -1,5 +1,6 @@
 package com.nuscomputing.ivlelapi;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -53,23 +54,22 @@ public class Poll extends IVLEObject {
 
 	/**
 	 * Method: getQuestions
-	 * Obtains the list of questions.
+	 * <p>
+	 * Obtains the list of questions in this poll.
 	 * 
 	 * @return Poll.Question[]
 	 */
-	public Poll.Question[] getQuestions() throws Exception {
-		// Create a new XPath object.
-//		XPath xpath = XPathFactory.newInstance().newXPath();
-//		NodeList questionList = (NodeList) xpath.evaluate("Questions/Data_Poll_Question", this.node, XPathConstants.NODESET);
-//		
-//		// Run through the itemList, generating a new item each iteration.
-//		Poll.Question[] p = new Poll.Question[questionList.getLength()];
-//		for (int i = 0; i < questionList.getLength(); i++) {
-//			p[i] = new Poll.Question(this.ivle, questionList.item(i), this);
-//		}
-//		
-//		return p;
-		return null;
+	public Poll.Question[] getQuestions() {
+		// Get the list of questions.
+		List<?> questionList = (List<?>) this.map.get("Questions");
+		Poll.Question[] q = new Poll.Question[questionList.size()];
+		
+		// Create an array of Poll.Question from the list.
+		for (int i = 0; i < questionList.size(); i++) {
+			q[i] = new Poll.Question(this.ivle, (Map<?, ?>) questionList.get(i), this);
+		}
+		
+		return q;
 	}
 	
 	/**
@@ -215,21 +215,22 @@ public class Poll extends IVLEObject {
 		
 		/**
 		 * Method: getQuestionOptions
+		 * <p>
 		 * Obtains the options for the poll.
+		 * 
+		 * @return Poll.QuestionOption[]
 		 */
-		public Poll.QuestionOption[] getQuestionOptions() throws Exception {
-			// Create a new XPath object.
-//			XPath xpath = XPathFactory.newInstance().newXPath();
-//			NodeList questionOptionList = (NodeList) xpath.evaluate("QuestionOptions/Data_Poll_QuestionOption", this.node, XPathConstants.NODESET);
-//			
-//			// Run through the itemList, generating a new item each iteration.
-//			Poll.QuestionOption[] p = new Poll.QuestionOption[questionOptionList.getLength()];
-//			for (int i = 0; i < questionOptionList.getLength(); i++) {
-//				p[i] = new Poll.QuestionOption(this.ivle, questionOptionList.item(i), this.poll, this);
-//			}
-//			
-//			return p;
-			return null;
+		public Poll.QuestionOption[] getQuestionOptions() {
+			// Get the list of questions.
+			List<?> questionOptionList = (List<?>) this.map.get("QuestionOptions");
+			Poll.QuestionOption[] q = new Poll.QuestionOption[questionOptionList.size()];
+			
+			// Create an array of Poll.Question from the list.
+			for (int i = 0; i < questionOptionList.size(); i++) {
+				q[i] = new Poll.QuestionOption(this.ivle, (Map<?, ?>) questionOptionList.get(i), poll, this);
+			}
+			
+			return q;
 		}
 		
 		/**
