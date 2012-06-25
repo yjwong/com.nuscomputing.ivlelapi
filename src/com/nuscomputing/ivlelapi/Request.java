@@ -77,6 +77,11 @@ class Request {
 			sw.start();
 		}
 		
+		// Print request URL.
+		if (IVLE.DEBUG) {
+			System.out.println("API REQUEST: " + this.m_url);
+		}
+		
 		try {
 			HttpsURLConnection urlConnection = (HttpsURLConnection) this.m_url.openConnection();
 			// Read the response.
