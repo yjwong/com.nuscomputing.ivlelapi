@@ -253,7 +253,7 @@ public class Workbin extends IVLEObject {
 			// Craft the URL.
 			String wburl_str = "https://ivle.nus.edu.sg/api/downloadfile.ashx?";
 			wburl_str = wburl_str.concat("APIKey=").concat(this.ivle.apiKey);
-			wburl_str = wburl_str.concat("&AuthToken").concat(this.ivle.authToken);
+			wburl_str = wburl_str.concat("&AuthToken=").concat(this.ivle.authToken);
 			wburl_str = wburl_str.concat("&ID=").concat(this.ID);
 			wburl_str = wburl_str.concat("&target=").concat("workbin");
 			URL wburl = new URL(wburl_str);
