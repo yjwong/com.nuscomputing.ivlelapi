@@ -76,6 +76,24 @@ public class IVLEObject {
 	}
 	
 	/**
+	 * Method: extractDouble
+	 * Utility method to extract double values from the parsed JSON.
+	 */
+	public static Double extractDouble(String key, Map<?, ?> map) {
+		// Sanity checks.
+		if (map == null) {
+			throw new IllegalArgumentException("map was null, key = " + key);
+		}
+		
+		if (key == null) {
+			throw new IllegalArgumentException("key was null");
+		}
+		
+		// Attempt to parse the double.
+		return map.get(key) == null ? null : Double.parseDouble(map.get(key).toString());
+	}
+	
+	/**
 	 * Method: extractBool
 	 * Utility method to extract boolean values from the parsed JSON.
 	 */

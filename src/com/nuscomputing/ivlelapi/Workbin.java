@@ -208,8 +208,7 @@ public class Workbin extends IVLEObject {
 		public final String fileRemarksAttachment;
 		
 		/** File size */
-		/** This should be double... */
-		public final Integer fileSize;
+		public final Double fileSize;
 		
 		/** File type */
 		public final String fileType;
@@ -232,7 +231,7 @@ public class Workbin extends IVLEObject {
 			this.fileName = extractString("FileName", map);
 			this.fileRemarks = extractString("FileRemarks", map);
 			this.fileRemarksAttachment = extractString("FileRemarksAttachment", map);
-			this.fileSize = extractInt("FileSize", map);
+			this.fileSize = extractDouble("FileSize", map);
 			this.fileType = extractString("FileType", map);
 			this.isDownloaded = extractBool("isDownloaded", map);
 		}
