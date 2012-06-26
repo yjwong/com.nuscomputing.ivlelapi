@@ -157,7 +157,10 @@ class Request {
 					json = json.concat(buf);
 				}
 				br.close();
-				System.out.println(json);
+				
+				if (IVLE.DEBUG) {
+					System.out.println("API RESPONSE: " + json);
+				}
 				
 				// Map the JSON value to native objects.
 				Map<?, ?> data = mapper.readValue(json, Map.class);
