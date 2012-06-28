@@ -718,8 +718,12 @@ public class IVLE {
 			FailedLoginException {
 		// Prepare the request.
 		Map<String, String> params = new HashMap<String, String>();
-		params.put("AcadYear", acadYear);
-		params.put("Semester", Integer.toString(semester));
+		if (acadYear != null) {
+			params.put("AcadYear", acadYear);
+		}
+		if (semester != null) {
+			params.put("Semester", Integer.toString(semester));
+		}
 		
 		// Execute the request.
 		URL url = IVLE.prepareURL(this, "Timetable_Student", params);
