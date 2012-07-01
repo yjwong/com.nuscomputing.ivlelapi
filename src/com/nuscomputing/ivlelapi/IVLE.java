@@ -953,19 +953,6 @@ public class IVLE {
 	// {{{ classes
 	
 	/**
-	 * No such module exception.
-	 * @author Wong Yong Jie
-	 */
-	class NoSuchModuleException extends Exception {
-		// {{{ properties
-		
-		/** Serial version ID for this exception */
-		private static final long serialVersionUID = 7399976978502453094L;
-		
-		// }}}
-	}
-	
-	/**
 	 * No such workbin exception.
 	 * @author Wong Yong Jie
 	 */
