@@ -436,7 +436,7 @@ public class Module extends IVLEObject {
 		Map<?, ?> data = request.execute().data;
 		List<?> lecturerList = (List<?>) data.get("Results");
 		
-		// Run through the moduleList, generating a new Module each iteration.
+		// Run through the lecturerList, generating a new Lecturer each iteration.
 		Lecturer[] l = new Lecturer[lecturerList.size()];
 		for (int i = 0; i < lecturerList.size(); i++) {
 			l[i] = new Lecturer(this.ivle, (Map<?, ?>) lecturerList.get(i));
@@ -448,6 +448,35 @@ public class Module extends IVLEObject {
 	public Lecturer[] getLecturers() throws JSONParserException,
 			FailedLoginException, NetworkErrorException {
 		return this.getLecturers(0);
+	}
+	
+	public static Lecturer[] getLecturers(IVLE ivle, String courseID,
+			int duration) throws JSONParserException, FailedLoginException,
+			NetworkErrorException {
+		// Prepare the request.
+		Map<String, String> urlParams = new HashMap<String, String>();
+		urlParams.put("CourseID", courseID);
+		urlParams.put("Duration", Integer.toString(duration));
+		URL url = IVLE.prepareURL(ivle, "Module_Lecturers", urlParams);
+		Request request = new Request(url);
+		
+		// Execute the request.
+		Map<?, ?> data = request.execute().data;
+		List<?> lecturerList = (List<?>) data.get("Results");
+		
+		// Run through the lecturerList, generating a new Lecturer each iteration.
+		Lecturer[] l = new Lecturer[lecturerList.size()];
+		for (int i = 0; i < lecturerList.size(); i++) {
+			l[i] = new Lecturer(ivle, (Map<?, ?>) lecturerList.get(i));
+		}
+		
+		return l;
+	}
+	
+	public static Lecturer[] getLecturers(IVLE ivle, String courseID)
+			throws JSONParserException, FailedLoginException,
+			NetworkErrorException {
+		return Module.getLecturers(ivle, courseID, 0);
 	}
 	
 	/**
@@ -717,7 +746,7 @@ public class Module extends IVLEObject {
 	 * @return Module.Weblink[]
 	 */
 	public Weblink[] getWeblinks() throws JSONParserException,
-		FailedLoginException, NetworkErrorException {
+			FailedLoginException, NetworkErrorException {
 		// Check courseID.
 		if (this.ID == null || this.ID.length() == 0) {
 			throw new IllegalStateException();
@@ -733,10 +762,31 @@ public class Module extends IVLEObject {
 		Map<?, ?> data = request.execute().data;
 		List<?> weblinkList = (List<?>) data.get("Results");
 		
-		// Run through the moduleList, generating a new Module each iteration.
+		// Run through the weblinkList, generating a new Weblink each iteration.
 		Weblink[] w = new Weblink[weblinkList.size()];
 		for (int i = 0; i < weblinkList.size(); i++) {
 			w[i] = new Weblink(this.ivle, (Map<?, ?>) weblinkList.get(i));
+		}
+		
+		return w;
+	}
+	
+	public static Weblink[] getWeblinks(IVLE ivle, String courseId) throws
+			JSONParserException, FailedLoginException, NetworkErrorException {
+		// Prepare the request.
+		Map<String, String> urlParams = new HashMap<String, String>();
+		urlParams.put("CourseID", courseId);
+		URL url = IVLE.prepareURL(ivle, "Module_Weblinks", urlParams);
+		Request request = new Request(url);
+		
+		// Execute the request.
+		Map<?, ?> data = request.execute().data;
+		List<?> weblinkList = (List<?>) data.get("Results");
+		
+		// Run through the weblinkList, generating a new Weblink each iteration.
+		Weblink[] w = new Weblink[weblinkList.size()];
+		for (int i = 0; i < weblinkList.size(); i++) {
+			w[i] = new Weblink(ivle, (Map<?, ?>) weblinkList.get(i));
 		}
 		
 		return w;
@@ -838,50 +888,6 @@ public class Module extends IVLEObject {
 	}
 	
 	/**
-	 * Represents a lecturer.
-	 * @author Wong Yong Jie
-	 */
-	public class Lecturer extends IVLEObject {
-		// {{{ properties
-		
-		/** Consultation hours */
-		public final String consultHrs;
-		
-		/** Order */
-		public final Integer order;
-		
-		/** Role */
-		public final String role;
-		
-		/** User */
-		public final User user;
-		
-		// }}}
-		// {{{ methods
-		
-		/**
-		 * Class constructor.
-		 */
-		Lecturer() {
-			throw new UnsupportedOperationException("This class should not be instantiated directly. Use IVLE instead. ");
-		}
-		
-		Lecturer(IVLE ivle, Map<?, ?> map) {
-			// Set our IVLE object.
-			this.ivle = ivle;
-			
-			// Read data from JSON.
-			this.consultHrs = extractString("ConsultHrs", map);
-			this.ID = extractString("ID", map);
-			this.order = extractInt("Order", map);
-			this.role = extractString("Role", map);
-			this.user = new User(this.ivle, (Map<?, ?>) map.get("User"));
-		}
-		
-		// }}}
-	}
-	
-	/**
 	 * Represents a reading.
 	 * @author Wong Yong Jie
 	 */
@@ -950,54 +956,6 @@ public class Module extends IVLEObject {
 			this.isFormatted = extractString("isFormatted", map);
 		}
 
-		// }}}
-	}
-	
-	/**
-	 * Represents a weblink.
-	 * @author Wong Yong Jie
-	 */
-	public class Weblink extends IVLEObject {
-		// {{{ properties
-		
-		/** Description */
-		public final String description;
-		
-		/** Order */
-		public final Integer order;
-		
-		/** Rating */
-		public final Integer rating;
-		
-		/** Site type */
-		public final String siteType;
-		
-		/** URL */
-		public final String url;
-		
-		// }}}
-		// {{{ methods
-		
-		/**
-		 * Class constructor.
-		 */
-		Weblink() {
-			throw new UnsupportedOperationException("This class should not be instantiated directly. Use IVLE instead. ");
-		}
-		
-		Weblink(IVLE ivle, Map<?, ?> map) {
-			// Set our IVLE object.
-			this.ivle = ivle;
-			
-			// Read data from JSON.
-			this.description = extractString("Description", map);
-			this.ID = extractString("ID", map);
-			this.order = extractInt("Order", map);
-			this.rating = extractInt("Rating", map);
-			this.siteType = extractString("SiteType", map);
-			this.url = extractString("URL", map);
-		}
-		
 		// }}}
 	}
 	

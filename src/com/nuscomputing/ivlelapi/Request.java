@@ -2,9 +2,12 @@ package com.nuscomputing.ivlelapi;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Map;
@@ -33,8 +36,20 @@ class Request {
 		ERROR
 	}
 	
+	/** Request types */
+	enum Type {
+		GET,
+		POST
+	}
+	
 	/** Request state */
 	private Request.State m_state;
+	
+	/** Request type */
+	private Request.Type m_type;
+	
+	/** The output stream, for POST requests */
+	private ByteArrayOutputStream m_out;
 	
 	/** Response */
 	public Response response;
@@ -48,14 +63,29 @@ class Request {
 	 * @throws MalformedURLException 
 	 */
 	public Request(URL url) {
+		this(url, Type.GET);
+	}
+	
+	public Request(URL url, Type type) {
+		this(url, type, null);
+	}
+	
+	public Request(URL url, Type type, ByteArrayOutputStream out) {
 		// Sanity check.
 		if (url == null) {
-			this.m_state = Request.State.ERROR;
+			this.m_state = State.ERROR;
 			throw new IllegalArgumentException("URL was null");
 		}
 		
+		if (type == null) {
+			this.m_state = State.ERROR;
+			throw new IllegalArgumentException("type was null");
+		}
+		
 		this.m_url = url;
-		this.m_state = Request.State.READY;
+		this.m_state = State.READY;
+		this.m_type = type;
+		this.m_out = out;
 	}
 	
 	/**
@@ -83,16 +113,43 @@ class Request {
 		}
 		
 		try {
-			HttpsURLConnection urlConnection = (HttpsURLConnection) this.m_url.openConnection();
+			// Set up the connection.
+			HttpsURLConnection conn = (HttpsURLConnection) this.m_url.openConnection();
+			conn.setDoInput(true);
+			
+			// Set up the connection if request is of type POST.
+			if (this.m_type == Type.POST) {
+				if (m_out == null) {
+					throw new IllegalArgumentException("Request is of type POST but no post data specified");
+				}
+				
+				String postData = m_out.toString();
+				conn.setRequestMethod("POST");
+				conn.setDoOutput(true);
+				conn.setUseCaches(false);
+				conn.setRequestProperty("Content-Length", String.valueOf(postData.length()));
+				
+				// Write the post data.
+				if (IVLE.DEBUG) {
+					System.out.println("API POSTDATA: " + postData);
+				}
+				OutputStreamWriter outWriter = new OutputStreamWriter(conn.getOutputStream());
+				outWriter.write(postData);
+				outWriter.flush();
+			}
+			
 			// Read the response.
 			try {
-				InputStream in = new BufferedInputStream(urlConnection.getInputStream());
+				InputStream in = new BufferedInputStream(conn.getInputStream());
+				this.response = new Request.Response(in);
+			} catch (FileNotFoundException e) {
+				InputStream in = new BufferedInputStream(conn.getErrorStream());
 				this.response = new Request.Response(in);
 			} finally {
-				urlConnection.disconnect();
+				conn.disconnect();
 			}
 
-			this.m_state = Request.State.COMPLETE;
+			this.m_state = State.COMPLETE;
 			
 		} catch (IOException ioe) {
 			ioe.printStackTrace();
@@ -115,6 +172,14 @@ class Request {
 	 */
 	public Request.State getState() {
 		return this.m_state;
+	}
+	
+	/**
+	 * Method: getType
+	 * Getter method to return the type.
+	 */
+	public Request.Type getType() {
+		return this.m_type;
 	}
 	
 	// }}}
@@ -151,19 +216,19 @@ class Request {
 			try {
 				// Read into string first.
 				BufferedReader br = new BufferedReader(new InputStreamReader(is));
-				String json = "";
-				String buf = "";
+				StringBuilder response = new StringBuilder(); 
+				String buf = null;
 				while ((buf = br.readLine()) != null) {
-					json = json.concat(buf);
+					response.append(buf);
 				}
 				br.close();
 				
 				if (IVLE.DEBUG) {
-					System.out.println("API RESPONSE: " + json);
+					System.out.println("API RESPONSE: " + response);
 				}
 				
 				// Map the JSON value to native objects.
-				Map<?, ?> data = mapper.readValue(json, Map.class);
+				Map<?, ?> data = mapper.readValue(response.toString(), Map.class);
 				
 				// Check if we need to do login validation.
 				if (validateLogin) {

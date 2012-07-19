@@ -28,7 +28,7 @@ public class IVLE {
 	public static String ENDPOINT = "https://ivle.nus.edu.sg/api/Lapi.svc/";
 	
 	/** Are we in debug mode? */
-	public static boolean DEBUG = false;
+	public static boolean DEBUG = true;
 	
 	/** The API key */
 	public String apiKey = null;
@@ -895,6 +895,26 @@ public class IVLE {
 	}
 	
 	/**
+	 * Method: preparePostURL
+	 * <p>
+	 * Prepares a URL for a POST request.
+	 */
+	public static URL preparePostURL(String action) {
+		// Sanity checks.
+		if (action == null) {
+			throw new NullPointerException("action cannot be null");
+		}
+		
+		// Prepare the URL.
+		String res = IVLE.ENDPOINT.concat(action);
+		try {
+			return new URL(res);
+		} catch (MalformedURLException e) {
+			return null;
+		}
+	}
+	
+	/**
 	 * Method: prepareURL
 	 * Prepares the URL for request, based on the specified action, API key,
 	 * authentication token and additional parameters.
@@ -908,8 +928,16 @@ public class IVLE {
 	public static URL prepareURL(String action, String apiKey, String authToken, 
 			Map<String, String> params) {
 		// Sanity checks.
-		if (action == null || apiKey == null || authToken == null) {
-			throw new IllegalArgumentException("No action, API key or authToken supplied");
+		if (action == null) {
+			throw new NullPointerException("action cannot be null");
+		}
+		
+		if (apiKey == null) {
+			throw new NullPointerException("apiKey cannot be null");
+		}
+		
+		if (authToken == null) {
+			throw new NullPointerException("authToken cannot be null");
 		}
 		
 		// If param is null, create an empty map.
