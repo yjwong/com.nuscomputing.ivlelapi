@@ -34,9 +34,6 @@ public class Timetable {
 	public class Slot {
 		// {{{ properties
 		
-		/** Module ID */
-		public final String courseId;
-		
 		/** Academic year */
 		public final String acadYear;
 		
@@ -77,7 +74,6 @@ public class Timetable {
 		// {{{ methods
 		
 		Slot(IVLE ivle, Map<?, ?> map) {
-			this.courseId = IVLEObject.extractString("CourseID", map);
 			this.acadYear = IVLEObject.extractString("AcadYear", map);
 			this.semester = IVLEObject.extractString("Semester", map);
 			this.startTime = IVLEObject.extractString("StartTime", map);
