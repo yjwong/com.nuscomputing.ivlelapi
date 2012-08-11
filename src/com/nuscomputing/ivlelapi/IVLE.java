@@ -25,10 +25,10 @@ public class IVLE {
 	// {{{ properties
 	
 	/** IVLE LAPI endpoint */
-	public static String ENDPOINT = "https://ivle.nus.edu.sg/api/Lapi.svc/";
+	final public static String ENDPOINT = "https://ivle.nus.edu.sg/api/Lapi.svc/";
 	
 	/** Are we in debug mode? */
-	public static boolean DEBUG = true;
+	final public static boolean DEBUG = true;
 	
 	/** The API key */
 	public String apiKey = null;
@@ -215,7 +215,7 @@ public class IVLE {
 	 * Gets forum information for past [duration] minutes. Set duration to 0
 	 * to show all.
 	 * 
-	 * @param forumID  The forum ID returned from the {@link getForums}
+	 * @param forumID  The forum ID returned from the {@link getForum}
 	 *                  function.
 	 * @param duration Limit the changes to the duration, in minutes.
 	 * 

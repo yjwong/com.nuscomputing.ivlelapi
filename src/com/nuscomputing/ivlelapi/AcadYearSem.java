@@ -6,7 +6,7 @@ import java.util.Map;
  * A data structure consisting academic year, semester and name.
  * @author Wong Yong Jie
  */
-public class AcadYearSem {
+public class AcadYearSem extends IVLEObject {
 	// {{{ properties
 	
 	/** Academic year */
@@ -27,16 +27,14 @@ public class AcadYearSem {
 	/**
 	 * Class constructor.
 	 */
-	AcadYearSem() {
-		throw new UnsupportedOperationException("This class should not be instantiated directly. Use IVLE instead. ");
-	}
-	
 	AcadYearSem(IVLE ivle, Map<?, ?> map) {
+		super(ivle, map);
+		
 		// Read data from JSON.
-		this.acadYear = IVLEObject.extractString("AcadYear", map);
-		this.acadSemester = IVLEObject.extractString("AcadSemester", map);
-		this.acadSemesterName = IVLEObject.extractString("AcadSemesterName", map);
-		this.isCurrent = IVLEObject.extractBool("isCurrent", map);
+		this.acadYear = extractString("AcadYear");
+		this.acadSemester = extractString("AcadSemester");
+		this.acadSemesterName = extractString("AcadSemesterName");
+		this.isCurrent = extractBool("isCurrent");
 	}
 	
 	// }}}

@@ -30,21 +30,16 @@ public class Weblink extends IVLEObject {
 	/**
 	 * Class constructor.
 	 */
-	Weblink() {
-		throw new UnsupportedOperationException("This class should not be instantiated directly. Use IVLE instead. ");
-	}
-	
 	Weblink(IVLE ivle, Map<?, ?> map) {
-		// Set our IVLE object.
-		this.ivle = ivle;
+		super(ivle, map);
 		
 		// Read data from JSON.
-		this.description = extractString("Description", map);
-		this.ID = extractString("ID", map);
-		this.order = extractInt("Order", map);
-		this.rating = extractInt("Rating", map);
-		this.siteType = extractString("SiteType", map);
-		this.url = extractString("URL", map);
+		this.description = extractString("Description");
+		this.ID = extractString("ID");
+		this.order = extractInt("Order");
+		this.rating = extractInt("Rating");
+		this.siteType = extractString("SiteType");
+		this.url = extractString("URL");
 	}
 	
 	// }}}

@@ -28,15 +28,14 @@ public class Group extends IVLEObject {
 	// {{{ methods
 	
 	Group(IVLE ivle, Map<?, ?> map) {
-		// Set our IVLE object.
-		this.ivle = ivle;
+		super(ivle, map);
 		
 		// Read data from JSON.
-		this.acadYear = extractString("AcadYear", map);
-		this.classGroupDesc = extractString("ClassGroupDesc", map);
-		this.classGroupId = extractString("ClassGroupID", map);
-		this.countStudentsEnrolled = extractInt("CountStudentsEnrolled", map);
-		this.courseId = extractString("CourseID", map);
+		this.acadYear = extractString("AcadYear");
+		this.classGroupDesc = extractString("ClassGroupDesc");
+		this.classGroupId = extractString("ClassGroupID");
+		this.countStudentsEnrolled = extractInt("CountStudentsEnrolled");
+		this.courseId = extractString("CourseID");
 	}
 	
 	// }}}

@@ -31,9 +31,6 @@ public class Workbin extends IVLEObject {
 	/** Title */
 	public final String title;
 
-	/** Save the map somewhere, because we'll use it */
-	private final Map<?, ?> map;
-	
 	/** Flags */
 	public static final int FLAG_TITLE_ONLY = 1;
 	
@@ -41,16 +38,14 @@ public class Workbin extends IVLEObject {
 	// {{{ methods
 
 	Workbin(IVLE ivle, Map<?, ?> map) {
-		// Set our IVLE object.
-		this.ivle = ivle;
+		super(ivle, map);
 		
 		// Read data from JSON.
-		this.map = map;
-		this.ID = extractString("ID", map);
-		this.badgeTool = extractInt("BadgeTool", map);
+		this.ID = extractString("ID");
+		this.badgeTool = extractInt("BadgeTool");
 		this.creator = new User(this.ivle, (Map<?, ?>) map.get("Creator"));
-		this.published = extractBool("Published", map);
-		this.title = extractString("Title", map);
+		this.published = extractBool("Published");
+		this.title = extractString("Title");
 	}
 	
 	/**
@@ -120,22 +115,21 @@ public class Workbin extends IVLEObject {
 		// {{{ methods
 		
 		Folder(IVLE ivle, Map<?, ?> map) {
-			// Set our IVLE object.
-			this.ivle = ivle;
+			super(ivle, map);
 			
 			// Read data from JSON.
 			this.map = map;
-			this.allowUpload = extractBool("AllowUpload", map);
-			this.allowView = extractBool("AllowView", map);
-			this.closeDate = extractDateTime("CloseDate", map);
-			this.commentOption = Character.forDigit(extractInt("CommentOption", map), 10);
-			this.fileCount = extractInt("FileCount", map);
-			this.folderName = extractString("FolderName", map);
-			this.order = extractInt("Order", map);
-			this.ID = extractString("ID", map);
-			this.openDate = extractDateTime("OpenDate", map);
-			this.sortFilesBy = extractString("SortFilesBy", map);
-			this.uploadDisplayOption = extractString("UploadDisplayOption", map);
+			this.allowUpload = extractBool("AllowUpload");
+			this.allowView = extractBool("AllowView");
+			this.closeDate = extractDateTime("CloseDate");
+			this.commentOption = Character.forDigit(extractInt("CommentOption"), 10);
+			this.fileCount = extractInt("FileCount");
+			this.folderName = extractString("FolderName");
+			this.order = extractInt("Order");
+			this.ID = extractString("ID");
+			this.openDate = extractDateTime("OpenDate");
+			this.sortFilesBy = extractString("SortFilesBy");
+			this.uploadDisplayOption = extractString("UploadDisplayOption");
 		}
 		
 		/**
@@ -220,20 +214,19 @@ public class Workbin extends IVLEObject {
 		// {{{ methods
 		
 		File(IVLE ivle, Map<?, ?> map) {
-			// Set our IVLE object.
-			this.ivle = ivle;
+			super(ivle, map);
 			
 			// Read data from JSON.
-			this.ID = extractString("ID", map);
+			this.ID = extractString("ID");
 			this.commenter = new User(this.ivle, (Map<?, ?>) map.get("Commenter"));
 			this.creator = new User(this.ivle, (Map<?, ?>) map.get("Creator"));
-			this.fileDescription = extractString("FileDescription", map);
-			this.fileName = extractString("FileName", map);
-			this.fileRemarks = extractString("FileRemarks", map);
-			this.fileRemarksAttachment = extractString("FileRemarksAttachment", map);
-			this.fileSize = extractDouble("FileSize", map);
-			this.fileType = extractString("FileType", map);
-			this.isDownloaded = extractBool("isDownloaded", map);
+			this.fileDescription = extractString("FileDescription");
+			this.fileName = extractString("FileName");
+			this.fileRemarks = extractString("FileRemarks");
+			this.fileRemarksAttachment = extractString("FileRemarksAttachment");
+			this.fileSize = extractDouble("FileSize");
+			this.fileType = extractString("FileType");
+			this.isDownloaded = extractBool("isDownloaded");
 		}
 		
 		/**

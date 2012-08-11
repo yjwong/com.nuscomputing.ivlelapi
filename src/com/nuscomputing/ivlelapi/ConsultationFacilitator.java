@@ -15,9 +15,6 @@ public class ConsultationFacilitator extends IVLEObject {
 	
 	/** The lecturer user corresponding to this facilitator */
 	public final User lecturer;
-	
-	/** Save the map, since we'll use it later */
-	public final Map<?, ?> map;
 
 	/** Flags */
 	public static final int FLAG_INCLUDE_SLOTS = 1;
@@ -26,14 +23,12 @@ public class ConsultationFacilitator extends IVLEObject {
 	// {{{ methods
 	
 	ConsultationFacilitator(IVLE ivle, Map<?, ?> map) {
-		// Set our IVLE object.
-		this.ivle = ivle;
+		super(ivle, map);
 		
 		// Read data from JSON.
-		this.map = map;
-		this.ID = extractString("ID", map);
+		this.ID = extractString("ID");
 		this.lecturer = new User(ivle, (Map<?, ?>) map.get("Lecturer"));
-		this.isManager = extractBool("IsManager", map);
+		this.isManager = extractBool("IsManager");
 	}
 	
 	/**

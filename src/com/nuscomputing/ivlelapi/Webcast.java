@@ -24,24 +24,19 @@ public class Webcast extends IVLEObject {
 	
 	/** Title */
 	public final String title;
-
-	/** Save the map somewhere, because we'll use it */
-	private final Map<?, ?> map;
 	
 	// }}}
 	// {{{ methods
 	
 	Webcast(IVLE ivle, Map<?, ?> map) {
-		// Set our IVLE object.
-		this.ivle = ivle;
+		super(ivle, map);
 		
 		// Read data from JSON.
-		this.map = map;
-		this.badgeTool = extractInt("BadgeTool", map);
+		this.badgeTool = extractInt("BadgeTool");
 		this.creator = new User(this.ivle, (Map<?, ?>) map.get("Creator"));
-		this.ID = extractString("ID", map);
-		this.published = extractBool("Published", map);
-		this.title = extractString("Title", map);
+		this.ID = extractString("ID");
+		this.published = extractBool("Published");
+		this.title = extractString("Title");
 	}
 	
 	/**
@@ -70,9 +65,6 @@ public class Webcast extends IVLEObject {
 		
 		/** Item group title */
 		public final String itemGroupTitle;
-
-		/** Save the map somewhere, because we'll use it */
-		private final Map<?, ?> map;
 		
 		// }}}
 		// {{{ methods
@@ -80,17 +72,11 @@ public class Webcast extends IVLEObject {
 		/**
 		 * Class constructor.
 		 */
-		ItemGroup() {
-			throw new UnsupportedOperationException("This class should not be instantiated directly. Use IVLE instead. ");
-		}
-		
 		ItemGroup(IVLE ivle, Map<?, ?> map) {
-			// Set our IVLE object.
-			this.ivle = ivle;
+			super(ivle, map);
 			
 			// Read data from JSON.
-			this.map = map;
-			this.itemGroupTitle = extractString("ItemGroupTitle", map);
+			this.itemGroupTitle = extractString("ItemGroupTitle");
 		}
 		
 		/**
@@ -167,26 +153,21 @@ public class Webcast extends IVLEObject {
 		/**
 		 * Class constructor.
 		 */
-		File() {
-			throw new UnsupportedOperationException("This class should not be instantiated directly. Use IVLE instead. ");
-		}
-		
 		File(IVLE ivle, Map<?, ?> map) {
-			// Set our IVLE object.
-			this.ivle = ivle;
+			super(ivle, map);
 			
 			// Read data from JSON.
-			this.bankItemID = extractString("BankItemID", map);
-			this.createDate = extractDateTime("CreateDate", map);
+			this.bankItemID = extractString("BankItemID");
+			this.createDate = extractDateTime("CreateDate");
 			this.creator = new User(this.ivle, (Map<?, ?>) map.get("Creator"));
-			this.fileDescription = extractString("FileDescription", map);
-			this.fileName = extractString("FileName", map);
-			this.fileTitle = extractString("FileTitle", map);
-			this.ID = extractString("ID", map);
-			this.MP3 = extractString("MP3", map);
-			this.MP4 = extractString("MP4", map);
-			this.mediaFormat = extractString("MediaFormat", map);
-			this.isRead = extractBool("isRead", map);
+			this.fileDescription = extractString("FileDescription");
+			this.fileName = extractString("FileName");
+			this.fileTitle = extractString("FileTitle");
+			this.ID = extractString("ID");
+			this.MP3 = extractString("MP3");
+			this.MP4 = extractString("MP4");
+			this.mediaFormat = extractString("MediaFormat");
+			this.isRead = extractBool("isRead");
 		}
 		
 		// }}}

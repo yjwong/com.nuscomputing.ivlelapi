@@ -123,41 +123,40 @@ public class Module extends IVLEObject {
 	// {{{ methods
 	
 	Module(IVLE ivle, Map<?, ?> map) {
-		// Set our IVLE object.
-		this.ivle = ivle;
+		super(ivle, map);
 		
 		// Read data from JSON.
-		this.badge = extractInt("Badge", map);
-		this.badgeAnnouncement = extractInt("BadgeAnnouncement", map);
-		this.courseAcadYear = extractString("CourseAcadYear", map);
-		this.courseCloseDate = extractDateTime("CourseCloseDate", map);
-		this.courseCode = extractString("CourseCode", map);
-		this.courseDepartment = extractString("CourseDepartment", map);
-		this.courseLevel = extractInt("CourseLevel", map);
-		this.courseMC = extractInt("CourseMC", map);
-		this.courseName = extractString("CourseName", map);
-		this.courseOpenDate = extractDateTime("CourseOpenDate", map);
-		this.courseSemester = extractString("CourseSemester", map);
+		this.badge = extractInt("Badge");
+		this.badgeAnnouncement = extractInt("BadgeAnnouncement");
+		this.courseAcadYear = extractString("CourseAcadYear");
+		this.courseCloseDate = extractDateTime("CourseCloseDate");
+		this.courseCode = extractString("CourseCode");
+		this.courseDepartment = extractString("CourseDepartment");
+		this.courseLevel = extractInt("CourseLevel");
+		this.courseMC = extractInt("CourseMC");
+		this.courseName = extractString("CourseName");
+		this.courseOpenDate = extractDateTime("CourseOpenDate");
+		this.courseSemester = extractString("CourseSemester");
 		this.creator = new User(this.ivle, (Map <?, ?>) map.get("Creator"));
 		this.forums = null;
-		this.hasAnnouncementItems = extractBool("hasAnnouncementItems", map);
-		this.hasClassGroupsForSignUp = extractBool("hasClassGroupsForSignUp", map);
-		this.hasClassRosterItems = extractBool("hasClassRosterItems", map);
-		this.hasConsultationItems = extractBool("hasConsultationItems", map);
-		this.hasConsultationSlotsForSignUp = extractBool("hasConsultationSlotsForSignUp", map);
-		this.hasDescriptionItems = extractBool("hasDescriptionItems", map);
-		this.hasGradebookItems = extractBool("hasGradebookItems", map);
-		this.hasGroupsItems = extractBool("hasGroupsItems", map);
-		this.hasGuestRosterItems = extractBool("hasGuestRosterItems", map);
-		this.hasLecturerItems = extractBool("hasLecturerItems", map);
-		this.hasProjectGroupItems = extractBool("hasProjectGroupItems", map);
-		this.hasProjectGroupsForSignUp = extractBool("hasProjectGroupsForSignUp", map);
-		this.hasReadingItems = extractBool("hasReadingItems", map);
-		this.hasTimetableItems = extractBool("hasTimetableItems", map);
-		this.hasWeblinkItems = extractBool("hasWeblinkItems", map);
-		this.ID = extractString("ID", map);
-		this.isActive = extractString("isActive", map);
-		this.permission = extractString("Permission", map);
+		this.hasAnnouncementItems = extractBool("hasAnnouncementItems");
+		this.hasClassGroupsForSignUp = extractBool("hasClassGroupsForSignUp");
+		this.hasClassRosterItems = extractBool("hasClassRosterItems");
+		this.hasConsultationItems = extractBool("hasConsultationItems");
+		this.hasConsultationSlotsForSignUp = extractBool("hasConsultationSlotsForSignUp");
+		this.hasDescriptionItems = extractBool("hasDescriptionItems");
+		this.hasGradebookItems = extractBool("hasGradebookItems");
+		this.hasGroupsItems = extractBool("hasGroupsItems");
+		this.hasGuestRosterItems = extractBool("hasGuestRosterItems");
+		this.hasLecturerItems = extractBool("hasLecturerItems");
+		this.hasProjectGroupItems = extractBool("hasProjectGroupItems");
+		this.hasProjectGroupsForSignUp = extractBool("hasProjectGroupsForSignUp");
+		this.hasReadingItems = extractBool("hasReadingItems");
+		this.hasTimetableItems = extractBool("hasTimetableItems");
+		this.hasWeblinkItems = extractBool("hasWeblinkItems");
+		this.ID = extractString("ID");
+		this.isActive = extractString("isActive");
+		this.permission = extractString("Permission");
 	}
 	
 	// }}}
@@ -874,14 +873,13 @@ public class Module extends IVLEObject {
 		}
 		
 		Description(IVLE ivle, Map<?, ?> map) {
-			// Set our IVLE object.
-			this.ivle = ivle;
+			super(ivle, map);
 			
 			// Read data from JSON.
-			this.description = extractString("Description", map);
-			this.ID = extractString("ID", map);
-			this.order = extractInt("Order", map);
-			this.title = extractString("Title", map);
+			this.description = extractString("Description");
+			this.ID = extractString("ID");
+			this.order = extractInt("Order");
+			this.title = extractString("Title");
 		}
 		
 		// }}}
@@ -938,22 +936,21 @@ public class Module extends IVLEObject {
 		}
 		
 		Reading(IVLE ivle, Map<?, ?> map) {
-			// Set our IVLE object.
-			this.ivle = ivle;
+			super(ivle, map);
 			
 			// Read data from JSON.
-			this.additionalInformation = extractString("AdditionalInformation", map);
-			this.author = extractString("Author", map);
-			this.bookType = extractString("BookType", map);
-			this.compWebsite = extractString("CompWebsite", map);
-			this.edition = extractString("Edition", map);
-			this.ID = extractString("ID", map);
-			this.ISBN = extractString("ISBN", map);
-			this.order = extractInt("Order", map);
-			this.publisher = extractString("Publisher", map);
-			this.pubYear = extractString("PubYear", map);
-			this.title = extractString("Title", map);
-			this.isFormatted = extractString("isFormatted", map);
+			this.additionalInformation = extractString("AdditionalInformation");
+			this.author = extractString("Author");
+			this.bookType = extractString("BookType");
+			this.compWebsite = extractString("CompWebsite");
+			this.edition = extractString("Edition");
+			this.ID = extractString("ID");
+			this.ISBN = extractString("ISBN");
+			this.order = extractInt("Order");
+			this.publisher = extractString("Publisher");
+			this.pubYear = extractString("PubYear");
+			this.title = extractString("Title");
+			this.isFormatted = extractString("isFormatted");
 		}
 
 		// }}}

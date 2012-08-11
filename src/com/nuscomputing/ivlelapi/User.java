@@ -42,8 +42,7 @@ public class User extends IVLEObject {
 	// {{{ methods
 	
 	public User(IVLE ivle, Map<?, ?> map) {
-		// Set our IVLE object.
-		this.ivle = ivle;
+		super(ivle, map);
 		
 		// Read data from JSON.
 		// Quirk: The creator can be null, so we consider this edge case.
@@ -55,12 +54,12 @@ public class User extends IVLEObject {
 			this.title = null;
 			this.userID = null;
 		} else {
-			this.ID = extractString("UserGuid", map);
-			this.accountType = extractString("AccountType", map);
-			this.email = extractString("Email", map);
-			this.name = extractString("Name", map);
-			this.title = extractString("Title", map);
-			this.userID = extractString("UserID", map);
+			this.ID = extractString("UserGuid");
+			this.accountType = extractString("AccountType");
+			this.email = extractString("Email");
+			this.name = extractString("Name");
+			this.title = extractString("Title");
+			this.userID = extractString("UserID");
 		}
 	}
 

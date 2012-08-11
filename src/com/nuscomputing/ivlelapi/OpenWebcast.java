@@ -35,10 +35,7 @@ public class OpenWebcast extends IVLEObject {
 	
 	/** Published */
 	public final Boolean published;
-	
-	/** Save the map, since we'll use it later */
-	public final Map<?, ?> map;
-	
+
 	/** Flags */
 	public static final int FLAG_TITLE_ONLY = 1; 
 	
@@ -46,20 +43,18 @@ public class OpenWebcast extends IVLEObject {
 	// {{{ methods
 	
 	OpenWebcast(IVLE ivle, Map<?, ?> map) {
-		// Set our IVLE object.
-		this.ivle = ivle;
+		super(ivle, map);
 		
 		// Read data from JSON.
-		this.map = map;
-		this.ID = extractString("ID", map);
-		this.courseCode = extractString("CourseCode", map);
-		this.courseName = extractString("CourseName", map);
-		this.courseAcadYearSem = extractString("CourseAcadYearSem", map);
-		this.title = extractString("Title", map);
-		this.recordings = extractInt("Recordings", map);
-		this.badgeTool = extractInt("BadgeTool", map);
+		this.ID = extractString("ID");
+		this.courseCode = extractString("CourseCode");
+		this.courseName = extractString("CourseName");
+		this.courseAcadYearSem = extractString("CourseAcadYearSem");
+		this.title = extractString("Title");
+		this.recordings = extractInt("Recordings");
+		this.badgeTool = extractInt("BadgeTool");
 		this.creator = new User(ivle, (Map<?, ?>) map.get("Creator"));
-		this.published = extractBool("Published", map);
+		this.published = extractBool("Published");
 	}
 	
 	/** 
@@ -127,19 +122,14 @@ public class OpenWebcast extends IVLEObject {
 		/** Title of this itemgroup */
 		public final String title;
 		
-		/** Save the map, since we'll use it later */
-		public final Map<?, ?> map;
-		
 		// }}}
 		// {{{ methods
 		
 		ItemGroup(IVLE ivle, Map<?, ?> map) {
-			// Set our IVLE object.
-			this.ivle = ivle;
+			super(ivle, map);
 			
 			// Read data from JSON.
-			this.map = map;
-			this.title = IVLEObject.extractString("ItemGroupTitle", map);
+			this.title = extractString("ItemGroupTitle");
 		}
 		
 		/**
@@ -215,25 +205,24 @@ public class OpenWebcast extends IVLEObject {
 		// {{{ methods
 		
 		File(IVLE ivle, Map<?, ?> map) {
-			// Set our IVLE object.
-			this.ivle = ivle;
+			super(ivle, map);
 			
 			// Read data from JSON.
-			this.ID = extractString("ID", map);
-			this.fileName = extractString("FileName", map);
-			this.MP4 = extractString("MP4", map);
-			this.MP3 = extractString("MP3", map);
-			this.faculty = extractString("Faculty", map);
-			this.presenter = extractString("Presenter", map);
-			this.venue = extractString("Venue", map);
-			this.startDate = extractDateTime("StartDate", map);
-			this.fileDescription = extractString("FileDescription", map);
-			this.fileTitle = extractString("FileTitle", map);
-			this.format = extractString("Format", map);
-			this.createDate = extractDateTime("CreateDate", map);
-			this.bankItemID = extractString("BankItemID", map);
+			this.ID = extractString("ID");
+			this.fileName = extractString("FileName");
+			this.MP4 = extractString("MP4");
+			this.MP3 = extractString("MP3");
+			this.faculty = extractString("Faculty");
+			this.presenter = extractString("Presenter");
+			this.venue = extractString("Venue");
+			this.startDate = extractDateTime("StartDate");
+			this.fileDescription = extractString("FileDescription");
+			this.fileTitle = extractString("FileTitle");
+			this.format = extractString("Format");
+			this.createDate = extractDateTime("CreateDate");
+			this.bankItemID = extractString("BankItemID");
 			this.creator = new User(this.ivle, (Map<?, ?>) map.get("Creator"));
-			this.isRead = extractBool("isRead", map);
+			this.isRead = extractBool("isRead");
 		}
 		
 		// }}}

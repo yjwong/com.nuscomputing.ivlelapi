@@ -128,6 +128,7 @@ class Request {
 				conn.setDoOutput(true);
 				conn.setUseCaches(false);
 				conn.setRequestProperty("Content-Length", String.valueOf(postData.length()));
+				conn.setRequestProperty("Content-Type", "application/json; charset=utf-8");
 				
 				// Write the post data.
 				if (IVLE.DEBUG) {
@@ -227,18 +228,25 @@ class Request {
 					System.out.println("API RESPONSE: " + response);
 				}
 				
-				// Map the JSON value to native objects.
-				Map<?, ?> data = mapper.readValue(response.toString(), Map.class);
-				
-				// Check if we need to do login validation.
-				if (validateLogin) {
-					Boolean loginResult = (Boolean) data.get("Success");
-					if (loginResult != null && !loginResult) {
-						throw new FailedLoginException();
+				// Some requests, especially POST ones, don't return any
+				// validation result. Just assume the request has succeeded.
+				if (response.toString().equals("null")) {
+					this.data = null;
+				} else {
+					// Map the JSON value to native objects.
+					Map<?, ?> data = mapper.readValue(response.toString(), Map.class);
+					
+					// Check if we need to do login validation.
+					if (validateLogin) {
+						Boolean loginResult = (Boolean) data.get("Success");
+						if (loginResult != null && !loginResult) {
+							throw new FailedLoginException();
+						}
 					}
+					
+					this.data = data;
 				}
 				
-				this.data = data;
 				is.close();
 				
 			} catch (JsonMappingException jme) {

@@ -40,18 +40,17 @@ public class Announcement extends IVLEObject {
 	// {{{ methods
 
 	Announcement(IVLE ivle, Map<?, ?> map) {
-		// Set our IVLE object.
-		this.ivle = ivle;
+		super(ivle, map);
 		
 		// Read data from JSON.
-		this.createdDate = extractDateTime("CreatedDate", map);
+		this.createdDate = extractDateTime("CreatedDate");
 		this.creator = new User(this.ivle, (Map<?, ?>) map.get("Creator"));
-		this.description = extractString("Description", map);
-		this.expiryDate = extractDateTime("ExpiryDate", map);
-		this.ID = extractString("ID", map);
-		this.title = extractString("Title", map);
-		this.url = extractString("URL", map);
-		this.isRead = extractBool("isRead", map);
+		this.description = extractString("Description");
+		this.expiryDate = extractDateTime("ExpiryDate");
+		this.ID = extractString("ID");
+		this.title = extractString("Title");
+		this.url = extractString("URL");
+		this.isRead = extractBool("isRead");
 	}
 	
 	/**
@@ -71,11 +70,41 @@ public class Announcement extends IVLEObject {
 		ByteArrayOutputStream out = new ByteArrayOutputStream();
 		
 		// Generate the output.
-		String outStr = "";
-		outStr = outStr.concat("APIKey=").concat(ivle.apiKey);
-		outStr = outStr.concat("&AuthToken=").concat("wrongtoken");
-		outStr = outStr.concat("&AnnEventID=").concat(this.ID);
-		out.write(outStr.getBytes());
+		StringBuilder builder = new StringBuilder()
+			.append("{ ")
+			.append("APIKey: ").append("\"").append(ivle.apiKey).append(",")
+			.append("AuthToken: ").append("\"").append(ivle.authToken).append(",")
+			.append("AnnEventID: ").append("\"").append(this.ID)
+			.append(" }");
+		out.write(builder.toString().getBytes());
+		
+		// Prepare the request.
+		URL url = IVLE.preparePostURL("Announcement_AddLog_JSON");
+		Request request = new Request(url, Request.Type.POST, out);
+		
+		// Execute the request.
+		request.execute();
+	}
+	
+	/**
+	 * Method: addLog
+	 * <p>
+	 * Adds log when user clicks to read announcements.
+	 * Note: This usually marks the announcement as read.
+	 */
+	public static void addLog(IVLE ivle, String id) throws IOException,
+			JSONParserException, FailedLoginException, NetworkErrorException {
+		// Create the JSON generator.
+		ByteArrayOutputStream out = new ByteArrayOutputStream();
+		
+		// Generate the output.
+		StringBuilder builder = new StringBuilder()
+			.append("{ ")
+			.append("APIKey: ").append("\"").append(ivle.apiKey).append(",")
+			.append("AuthToken: ").append("\"").append(ivle.authToken).append(",")
+			.append("AnnEventID: ").append("\"").append(id)
+			.append(" }");
+		out.write(builder.toString().getBytes());
 		
 		// Prepare the request.
 		URL url = IVLE.preparePostURL("Announcement_AddLog_JSON");

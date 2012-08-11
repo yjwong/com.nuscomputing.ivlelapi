@@ -28,9 +28,6 @@ public class Poll extends IVLEObject {
 	/** Title */
 	public final String title;
 	
-	/** Save the map somewhere, because we'll use it */
-	private final Map<?, ?> map;
-	
 	// }}}
 	// {{{ methods
 	
@@ -38,18 +35,16 @@ public class Poll extends IVLEObject {
 	 * Class constructor.
 	 */
 	Poll(IVLE ivle, Map<?, ?> map) {
-		// Set our IVLE object.
-		this.ivle = ivle;
+		super(ivle, map);
 		
 		// Read data from JSON.
-		this.map = map;
-		this.allowViewResult = extractBool("AllowViewResult", map);
-		this.allowVoteMultiple = extractBool("AllowVoteMultiple", map);
+		this.allowViewResult = extractBool("AllowViewResult");
+		this.allowVoteMultiple = extractBool("AllowVoteMultiple");
 		this.creator = new User(this.ivle, (Map<?, ?>) map.get("Creator"));
-		this.description = extractString("Description", map);
-		this.ID = extractString("ID", map);
-		this.published = extractBool("Published", map);
-		this.title = extractString("Title", map);
+		this.description = extractString("Description");
+		this.ID = extractString("ID");
+		this.published = extractBool("Published");
+		this.title = extractString("Title");
 	}
 
 	/**
@@ -185,9 +180,6 @@ public class Poll extends IVLEObject {
 		
 		/** Voted */
 		public final Boolean voted;
-
-		/** Save the map somewhere, because we'll use it */
-		private final Map<?, ?> map;
 		
 		// }}}
 		// {{{ methods
@@ -195,22 +187,16 @@ public class Poll extends IVLEObject {
 		/**
 		 * Class constructor.
 		 */
-		Question() {
-			throw new UnsupportedOperationException("This class should not be instantiated directly. Use IVLE instead. ");
-		}
-		
 		Question(IVLE ivle, Map<?, ?> map, Poll poll) {
-			// Set our IVLE object.
-			this.ivle = ivle;
+			super(ivle, map);
 			
 			// Read data from JSON.
-			this.map = map;
 			this.poll = poll;
-			this.hasOtherOption = extractBool("HasOtherOption", map);
-			this.ID = extractString("ID", map);
-			this.order = extractInt("Order", map);
-			this.questionText = extractString("QuestionText", map);
-			this.voted = extractBool("Voted", map);
+			this.hasOtherOption = extractBool("HasOtherOption");
+			this.ID = extractString("ID");
+			this.order = extractInt("Order");
+			this.questionText = extractString("QuestionText");
+			this.voted = extractBool("Voted");
 		}
 		
 		/**
@@ -290,21 +276,16 @@ public class Poll extends IVLEObject {
 		/**
 		 * Class constructor.
 		 */
-		QuestionOption() {
-			throw new UnsupportedOperationException("This class should not be instantiated directly. Use IVLE instead. ");
-		}
-		
 		QuestionOption(IVLE ivle, Map<?, ?> map, Poll poll, Poll.Question pollQuestion) {
-			// Set our IVLE object.
-			this.ivle = ivle;
+			super(ivle, map);
 			
 			// Read data from JSON.
 			this.poll = poll;
 			this.pollQuestion = pollQuestion;
-			this.ID = extractString("ID", map);
-			this.optionText = extractString("OptionText", map);
-			this.order = extractInt("Order", map);
-			this.votedCount = extractInt("VotedCount", map);
+			this.ID = extractString("ID");
+			this.optionText = extractString("OptionText");
+			this.order = extractInt("Order");
+			this.votedCount = extractInt("VotedCount");
 		}
 		
 		/**

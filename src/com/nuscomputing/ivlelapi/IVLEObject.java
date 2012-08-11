@@ -20,11 +20,29 @@ public class IVLEObject {
 	/** Reference to the IVLE class */
 	protected IVLE ivle;
 	
+	/** The map */
+	protected Map<?, ?> map;
+	
 	/** Flags */
 	private Set<Integer> flags = new HashSet<Integer>();
 	
 	// }}}
 	// {{{ methods
+	
+	IVLEObject() {
+		throw new IllegalStateException("Subclass did not call through to super");
+	}
+	
+	IVLEObject(IVLE ivle, Map<?, ?> map) {
+		// Sanity checks.
+		if (ivle == null) {
+			throw new IllegalArgumentException("ivle was null");
+		}
+		
+		// Otherwise, carry on.
+		this.ivle = ivle;
+		this.map = map;
+	}
 	
 	/**
 	 * Method: getFlags
@@ -57,14 +75,10 @@ public class IVLEObject {
 	 * Method: extractInt
 	 * Utility method to extract integer values from the parsed JSON.
 	 */	
-	public static Integer extractInt(String key, Map<?, ?> map) {
+	protected Integer extractInt(String key) {
 		// Sanity checks.
-		if (map == null) {
-			throw new IllegalArgumentException("map was null, key = " + key);
-		}
-		
 		if (key == null) {
-			throw new IllegalArgumentException("key was null");
+			throw new IllegalArgumentException("key cannot be null");
 		}
 		
 		// Attempt to parse the integer.
@@ -79,14 +93,10 @@ public class IVLEObject {
 	 * Method: extractDouble
 	 * Utility method to extract double values from the parsed JSON.
 	 */
-	public static Double extractDouble(String key, Map<?, ?> map) {
+	protected Double extractDouble(String key) {
 		// Sanity checks.
-		if (map == null) {
-			throw new IllegalArgumentException("map was null, key = " + key);
-		}
-		
 		if (key == null) {
-			throw new IllegalArgumentException("key was null");
+			throw new IllegalArgumentException("key cannot be null");
 		}
 		
 		// Attempt to parse the double.
@@ -97,32 +107,24 @@ public class IVLEObject {
 	 * Method: extractBool
 	 * Utility method to extract boolean values from the parsed JSON.
 	 */
-	public static Boolean extractBool(String key, Map<?, ?> map) {
+	protected Boolean extractBool(String key) {
 		// Sanity checks.
-		if (map == null) {
-			throw new IllegalArgumentException("map was null, key = " + key);
-		}
-		
 		if (key == null) {
-			throw new IllegalArgumentException("key was null");
+			throw new IllegalArgumentException("key cannot be null");
 		}
 		
 		// Return the boolean value.
-		return map.get(key) == null ? null : new Boolean(map.get(key).toString());
+		return map.get(key) == null ? null : Boolean.valueOf(map.get(key).toString());
 	}
 	
 	/**
 	 * Method: extractString
 	 * Utility method to extract string values from the parsed JSON.
 	 */
-	public static String extractString(String key, Map<?, ?> map) {
+	protected String extractString(String key) {
 		// Sanity checks.
-		if (map == null) {
-			throw new IllegalArgumentException("map was null, key = " + key);
-		}
-		
 		if (key == null) {
-			throw new IllegalArgumentException("key was null");
+			throw new IllegalArgumentException("key cannot be null");
 		}
 		
 		// Return the string value.
@@ -133,14 +135,10 @@ public class IVLEObject {
 	 * Method: extractDateTime
 	 * Utility method to extract DateTime values from the parsed JSON.
 	 */
-	public static DateTime extractDateTime(String key, Map<?, ?> map) {
-		// Sanity checks.
-		if (map == null) {
-			throw new IllegalArgumentException("map was null, key = " + key);
-		}
-		
+	protected DateTime extractDateTime(String key) {
+		// Sanity checks.		
 		if (key == null) {
-			throw new IllegalArgumentException("key was null");
+			throw new IllegalArgumentException("key cannot be null");
 		}
 		
 		// This uses the .NET serialized date format...

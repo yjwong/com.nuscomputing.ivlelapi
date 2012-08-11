@@ -27,14 +27,13 @@ public class PublicNews extends IVLEObject {
 	 * Class constructor.
 	 */
 	PublicNews(IVLE ivle, Map<?, ?> map) {
-		// Set our IVLE object.
-		this.ivle = ivle;
+		super(ivle, map);
 		
 		// Read data from JSON.
-		this.title = extractString("Title", map);
-		this.description = extractString("Description", map);
-		this.ID = extractString("ID", map);
-		this.createdDate = extractDateTime("CreatedDate", map);
+		this.title = extractString("Title");
+		this.description = extractString("Description");
+		this.ID = extractString("ID");
+		this.createdDate = extractDateTime("CreatedDate");
 	}
 	
 	// }}}

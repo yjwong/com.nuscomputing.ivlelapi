@@ -14,9 +14,6 @@ public class Gradebook extends IVLEObject {
 	/** Category title */
 	public final String categoryTitle;
 	
-	/** Save the map somewhere, because we'll use it */
-	private final Map<?, ?> map;
-	
 	// }}}
 	// {{{ classes
 	
@@ -24,13 +21,11 @@ public class Gradebook extends IVLEObject {
 	 * Class constructor.
 	 */
 	Gradebook(IVLE ivle, Map<?, ?> map) {
-		// Set our IVLE object.
-		this.ivle = ivle;
+		super(ivle, map);
 		
 		// Read data from JSON.
-		this.map = map;
-		this.categoryTitle = extractString("CategoryTitle", map);
-		this.ID = extractString("ID", map);
+		this.categoryTitle = extractString("CategoryTitle");
+		this.ID = extractString("ID");
 	}
 	
 	/**
@@ -87,25 +82,20 @@ public class Gradebook extends IVLEObject {
 		/**
 		 * Class constructor.
 		 */
-		Item() {
-			throw new UnsupportedOperationException("This class should not be instantiated directly. Use IVLE instead. ");
-		}
-		
 		Item(IVLE ivle, Map<?, ?> map) {
-			// Set our IVLE object.
-			this.ivle = ivle;
+			super(ivle, map);
 			
 			// Read data from JSON.
-			this.averageMedianMarks = extractString("AverageMedianMarks", map);
-			this.dateEntered = extractString("DateEntered", map);
-			this.highestLowestMarks = extractString("HighestLowestMarks", map);
-			this.ID = extractString("ID", map);
-			this.itemDescription = extractString("ItemDescription", map);
-			this.itemName = extractString("ItemName", map);
-			this.marksObtained = extractString("MarksObtained", map);
-			this.maxMarks = extractInt("MaxMarks", map);
-			this.percentile = extractString("Percentile", map);
-			this.remark = extractString("Remark", map);
+			this.averageMedianMarks = extractString("AverageMedianMarks");
+			this.dateEntered = extractString("DateEntered");
+			this.highestLowestMarks = extractString("HighestLowestMarks");
+			this.ID = extractString("ID");
+			this.itemDescription = extractString("ItemDescription");
+			this.itemName = extractString("ItemName");
+			this.marksObtained = extractString("MarksObtained");
+			this.maxMarks = extractInt("MaxMarks");
+			this.percentile = extractString("Percentile");
+			this.remark = extractString("Remark");
 		}
 		
 		// }}}

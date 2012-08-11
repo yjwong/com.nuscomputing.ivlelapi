@@ -57,25 +57,24 @@ public class ConsultationSlot extends IVLEObject {
 	// {{{ methods
 	
 	ConsultationSlot(IVLE ivle, Map<?, ?> map) {
-		// Set our IVLE object.
-		this.ivle = ivle;
+		super(ivle, map);
 		
 		// Read data from JSON.
-		this.ID = extractString("ID", map);
-		this.bookingStartDate = extractDateTime("BookingStartDate", map);
-		this.bookingEndDate = extractDateTime("BookingEndDate", map);
-		this.consultationStartDate = extractDateTime("ConsultationStartDate", map);
-		this.consultationEndDate = extractDateTime("ConsultationEndDate", map);
-		this.contactMethod = extractString("ContactMethod", map);
-		this.courseCode = extractString("CourseCode", map);
-		this.courseId = extractString("CourseID", map);
-		this.courseName = extractString("CourseName", map);
-		this.duration = extractString("Duration", map);
-		this.isSignedUp = extractBool("IsSignUp", map);
+		this.ID = extractString("ID");
+		this.bookingStartDate = extractDateTime("BookingStartDate");
+		this.bookingEndDate = extractDateTime("BookingEndDate");
+		this.consultationStartDate = extractDateTime("ConsultationStartDate");
+		this.consultationEndDate = extractDateTime("ConsultationEndDate");
+		this.contactMethod = extractString("ContactMethod");
+		this.courseCode = extractString("CourseCode");
+		this.courseId = extractString("CourseID");
+		this.courseName = extractString("CourseName");
+		this.duration = extractString("Duration");
+		this.isSignedUp = extractBool("IsSignUp");
 		this.lecturer = new User(ivle, (Map<?, ?>) map.get("Lecturer"));
-		this.signUpDate = extractDateTime("SignUpDate", map);
+		this.signUpDate = extractDateTime("SignUpDate");
 		this.signUpUser = new User(ivle, (Map<?, ?>) map.get("SignUpUser"));
-		this.venue = extractString("Venue", map);
+		this.venue = extractString("Venue");
 	}
 	
 	// }}}

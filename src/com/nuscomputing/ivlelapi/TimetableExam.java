@@ -33,7 +33,7 @@ public class TimetableExam {
 	 * Represents a timetable slot.
 	 * @author Wong Yong Jie
 	 */
-	public class Slot {
+	public class Slot extends IVLEObject {
 		// {{{ properties
 		
 		/** Module ID */
@@ -61,13 +61,14 @@ public class TimetableExam {
 		// {{{ methods
 		
 		Slot(IVLE ivle, Map<?, ?> map) {
-			this.courseId = IVLEObject.extractString("CourseID", map);
-			this.acadYear = IVLEObject.extractString("AcadYear", map);
-			this.semester = IVLEObject.extractString("Semester", map);
-			this.examDate = IVLEObject.extractDateTime("ExamDate", map);
-			this.examSession = IVLEObject.extractString("ExamSession", map);
-			this.examInfo = IVLEObject.extractString("ExamInfo", map);
-			this.moduleCode = IVLEObject.extractString("ModuleCode", map);
+			super(ivle, map);
+			this.courseId = extractString("CourseID");
+			this.acadYear = extractString("AcadYear");
+			this.semester = extractString("Semester");
+			this.examDate = extractDateTime("ExamDate");
+			this.examSession = extractString("ExamSession");
+			this.examInfo = extractString("ExamInfo");
+			this.moduleCode = extractString("ModuleCode");
 		}
 		
 		// }}}

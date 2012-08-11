@@ -40,19 +40,18 @@ public class StudentEvent extends IVLEObject {
 	// {{{ methods
 	
 	StudentEvent(IVLE ivle, Map<?, ?> map) {
-		// Set our IVLE object.
-		this.ivle = ivle;
+		super(ivle, map);
 		
 		// Read data from JSON.
-		this.title = extractString("Title", map);
-		this.description = extractString("Description", map);
-		this.eventDateTime = extractString("EventDateTime", map);
-		this.organizer = extractString("Organizer", map);
-		this.venue = extractString("Venue", map);
-		this.price = extractString("Price", map);
-		this.agenda = extractString("Agenda", map);
-		this.contact = extractString("Contact", map);
-		this.ID = extractString("ID", map);
+		this.title = extractString("Title");
+		this.description = extractString("Description");
+		this.eventDateTime = extractString("EventDateTime");
+		this.organizer = extractString("Organizer");
+		this.venue = extractString("Venue");
+		this.price = extractString("Price");
+		this.agenda = extractString("Agenda");
+		this.contact = extractString("Contact");
+		this.ID = extractString("ID");
 	}
 	
 	// }}}

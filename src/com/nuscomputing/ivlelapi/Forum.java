@@ -34,9 +34,6 @@ class Forum extends IVLEObject {
 	/** Does this forum have items? */
 	public final Boolean hasItems;
 	
-	/** Save the map somewhere, because we'll use it */
-	private final Map<?, ?> map;
-	
 	// }}}
 	// {{{ methods
 	
@@ -44,19 +41,17 @@ class Forum extends IVLEObject {
 	 * Class constructor.
 	 */
 	Forum(IVLE ivle, Map<?, ?> map) {
-		// Set our IVLE object.
-		this.ivle = ivle;
+		super(ivle, map);
 		
 		// Read data from JSON.
-		this.map = null;
-		this.badgeTool = extractInt("BadgeTool", map);
-		this.expiryDate = extractDateTime("ExpiryDate", map);
-		this.hasItems = extractBool("hasItems", map);
+		this.badgeTool = extractInt("BadgeTool");
+		this.expiryDate = extractDateTime("ExpiryDate");
+		this.hasItems = extractBool("hasItems");
 		this.headings = null;
-		this.ID = extractString("ID", map);
-		this.welcomeMessage = extractString("WelcomeMessage", map);
-		this.sortingOrder = extractInt("SortingOrder", map);
-		this.title = extractString("Title", map);
+		this.ID = extractString("ID");
+		this.welcomeMessage = extractString("WelcomeMessage");
+		this.sortingOrder = extractInt("SortingOrder");
+		this.title = extractString("Title");
 	}
 	
 	/** 
@@ -125,16 +120,15 @@ class Forum extends IVLEObject {
 		}
 		
 		Heading(IVLE ivle, Map<?, ?> map) {
-			// Set our IVLE object.
-			this.ivle = ivle;
+			super(ivle, map);
 			
 			// Read data from JSON.
-			this.badgeHeading = extractInt("BadgeHeading", map);
-			this.headingOrder = extractInt("HeadingOrder", map);
-			this.ID = extractString("ID", map);
+			this.badgeHeading = extractInt("BadgeHeading");
+			this.headingOrder = extractInt("HeadingOrder");
+			this.ID = extractString("ID");
 			this.threads = null;
-			this.title = extractString("Title", map);
-			this.isArchive = extractBool("isArchive", map);
+			this.title = extractString("Title");
+			this.isArchive = extractBool("isArchive");
 		}
 		
 		// }}}
@@ -176,9 +170,6 @@ class Forum extends IVLEObject {
 		
 		/** Is this a survey post? */
 		public final boolean isSurveyPost;
-
-		/** Save the map somewhere, because we'll use it */
-		private final Map<?, ?> map;
 		
 		// }}}
 		// {{{ methods
@@ -191,22 +182,20 @@ class Forum extends IVLEObject {
 		}
 		
 		Thread(IVLE ivle, Map<?, ?> map) {
-			// Set our IVLE object.
-			this.ivle = ivle;
+			super(ivle, map);
 			
 			// Read data from JSON.
-			this.map = map;
-			this.ID = extractString("ID", map);
-			this.postAttachment = extractString("PostAttachment", map);
-			this.postBody = extractString("PostBody", map);
-			this.postDate = extractDateTime("PostDate", map);
-			this.postTitle = extractString("PostTitle", map);
+			this.ID = extractString("ID");
+			this.postAttachment = extractString("PostAttachment");
+			this.postBody = extractString("PostBody");
+			this.postDate = extractDateTime("PostDate");
+			this.postTitle = extractString("PostTitle");
 			this.poster = new User(this.ivle, (Map<?, ?>) map.get("Poster"));
 			this.threads = null;
-			this.isNewPost = extractBool("isNewPost", map);
-			this.isPosterStaff = extractBool("isPosterStaff", map);
-			this.isRead = extractBool("isRead", map);
-			this.isSurveyPost = extractBool("isSurveyPost", map);
+			this.isNewPost = extractBool("isNewPost");
+			this.isPosterStaff = extractBool("isPosterStaff");
+			this.isRead = extractBool("isRead");
+			this.isSurveyPost = extractBool("isSurveyPost");
 		}
 		
 		/**

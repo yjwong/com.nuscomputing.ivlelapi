@@ -16,9 +16,6 @@ public class StudentEventCategory extends IVLEObject {
 	/** The badge for this category */
 	public final Integer badgeCategory;
 	
-	/** Store the map, for we will use it later */
-	private final Map<?, ?> map;
-	
 	/** Flags */
 	public static final int FLAG_INCLUDE_EVENTS = 1;
 	public static final int FLAG_TITLE_ONLY = 2;
@@ -27,14 +24,12 @@ public class StudentEventCategory extends IVLEObject {
 	// {{{ methods
 	
 	StudentEventCategory(IVLE ivle, Map<?, ?> map) {
-		// Set our IVLE object.
-		this.ivle = ivle;
+		super(ivle, map);
 		
 		// Read data from JSON.
-		this.map = map;
-		this.title = extractString("Title", map);
-		this.badgeCategory = extractInt("BadgeCategory", map);
-		this.ID = extractString("ID", map);
+		this.title = extractString("Title");
+		this.badgeCategory = extractInt("BadgeCategory");
+		this.ID = extractString("ID");
 	}
 	
 	/**

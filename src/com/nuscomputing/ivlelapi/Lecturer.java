@@ -27,19 +27,14 @@ public class Lecturer extends IVLEObject {
 	/**
 	 * Class constructor.
 	 */
-	Lecturer() {
-		throw new UnsupportedOperationException("This class should not be instantiated directly. Use IVLE instead. ");
-	}
-	
 	Lecturer(IVLE ivle, Map<?, ?> map) {
-		// Set our IVLE object.
-		this.ivle = ivle;
+		super(ivle, map);
 		
 		// Read data from JSON.
-		this.consultHrs = extractString("ConsultHrs", map);
-		this.ID = extractString("ID", map);
-		this.order = extractInt("Order", map);
-		this.role = extractString("Role", map);
+		this.consultHrs = extractString("ConsultHrs");
+		this.ID = extractString("ID");
+		this.order = extractInt("Order");
+		this.role = extractString("Role");
 		this.user = new User(this.ivle, (Map<?, ?>) map.get("User"));
 	}
 	

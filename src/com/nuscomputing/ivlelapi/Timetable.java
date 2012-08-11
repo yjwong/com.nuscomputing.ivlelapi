@@ -31,7 +31,7 @@ public class Timetable {
 	 * Represents a timetable slot.
 	 * @author Wong Yong Jie
 	 */
-	public class Slot {
+	public class Slot extends IVLEObject {
 		// {{{ properties
 		
 		/** Academic year */
@@ -74,18 +74,19 @@ public class Timetable {
 		// {{{ methods
 		
 		Slot(IVLE ivle, Map<?, ?> map) {
-			this.acadYear = IVLEObject.extractString("AcadYear", map);
-			this.semester = IVLEObject.extractString("Semester", map);
-			this.startTime = IVLEObject.extractString("StartTime", map);
-			this.endTime = IVLEObject.extractString("EndTime", map);
-			this.moduleCode = IVLEObject.extractString("ModuleCode", map);
-			this.classNo = IVLEObject.extractString("ClassNo", map);
-			this.lessonType = IVLEObject.extractString("LessonType", map);
-			this.venue = IVLEObject.extractString("Venue", map);
-			this.dayCode = IVLEObject.extractString("DayCode", map);
-			this.dayText = IVLEObject.extractString("DayText", map);
-			this.weekCode = IVLEObject.extractString("WeekCode", map);
-			this.weekText = IVLEObject.extractString("WeekText", map);
+			super(ivle, map);
+			this.acadYear = extractString("AcadYear");
+			this.semester = extractString("Semester");
+			this.startTime = extractString("StartTime");
+			this.endTime = extractString("EndTime");
+			this.moduleCode = extractString("ModuleCode");
+			this.classNo = extractString("ClassNo");
+			this.lessonType = extractString("LessonType");
+			this.venue = extractString("Venue");
+			this.dayCode = extractString("DayCode");
+			this.dayText = extractString("DayText");
+			this.weekCode = extractString("WeekCode");
+			this.weekText = extractString("WeekText");
 		}
 		
 		// }}}
