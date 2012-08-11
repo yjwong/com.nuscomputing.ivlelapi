@@ -7,6 +7,9 @@ import java.util.Map;
 
 import org.joda.time.DateTime;
 
+import com.fasterxml.jackson.core.JsonFactory;
+import com.fasterxml.jackson.core.JsonGenerator;
+
 /**
  * Represents an announcement.
  * @author Wong Yong Jie
@@ -68,15 +71,16 @@ public class Announcement extends IVLEObject {
 		
 		// Create the JSON generator.
 		ByteArrayOutputStream out = new ByteArrayOutputStream();
+		JsonFactory factory = new JsonFactory();
+		JsonGenerator gen = factory.createJsonGenerator(out);
 		
 		// Generate the output.
-		StringBuilder builder = new StringBuilder()
-			.append("{ ")
-			.append("APIKey: ").append("\"").append(ivle.apiKey).append(",")
-			.append("AuthToken: ").append("\"").append(ivle.authToken).append(",")
-			.append("AnnEventID: ").append("\"").append(this.ID)
-			.append(" }");
-		out.write(builder.toString().getBytes());
+		gen.writeStartObject();
+		gen.writeStringField("APIKey", ivle.apiKey);
+		gen.writeStringField("AuthToken", ivle.authToken);
+		gen.writeStringField("AnnEventID", this.ID);
+		gen.writeEndObject();
+		gen.close();
 		
 		// Prepare the request.
 		URL url = IVLE.preparePostURL("Announcement_AddLog_JSON");
@@ -96,15 +100,16 @@ public class Announcement extends IVLEObject {
 			JSONParserException, FailedLoginException, NetworkErrorException {
 		// Create the JSON generator.
 		ByteArrayOutputStream out = new ByteArrayOutputStream();
+		JsonFactory factory = new JsonFactory();
+		JsonGenerator gen = factory.createJsonGenerator(out);
 		
 		// Generate the output.
-		StringBuilder builder = new StringBuilder()
-			.append("{ ")
-			.append("APIKey: ").append("\"").append(ivle.apiKey).append(",")
-			.append("AuthToken: ").append("\"").append(ivle.authToken).append(",")
-			.append("AnnEventID: ").append("\"").append(id)
-			.append(" }");
-		out.write(builder.toString().getBytes());
+		gen.writeStartObject();
+		gen.writeStringField("APIKey", ivle.apiKey);
+		gen.writeStringField("AuthToken", ivle.authToken);
+		gen.writeStringField("AnnEventID", id);
+		gen.writeEndObject();
+		gen.close();
 		
 		// Prepare the request.
 		URL url = IVLE.preparePostURL("Announcement_AddLog_JSON");
