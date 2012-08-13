@@ -34,11 +34,11 @@ public class MyOrganizer extends IVLEObject {
 	 * <p>
 	 * Creates a new personal event, returning the new event ID.
 	 */
-	public String addEventPersonal(String eventTitle, String venue,
-			String eventDateTime, String description, String recurType,
-			String weeklyRecurEvery, String strDays, String recurTillDate)
-			throws IOException, JSONParserException, FailedLoginException,
-			NetworkErrorException {
+	public static String addEventPersonal(IVLE ivle, String eventTitle,
+			String venue, String eventDateTime, String description,
+			String recurType, String weeklyRecurEvery, String strDays,
+			String recurTillDate) throws IOException, JSONParserException,
+			FailedLoginException, NetworkErrorException {
 		// Validate recurrence type.
 		if (recurType != null && recurType != "N" && recurType != "W") {
 			throw new IllegalArgumentException("Recurrence type can only be null, N or W");
@@ -51,8 +51,8 @@ public class MyOrganizer extends IVLEObject {
 		
 		// Generate the output.
 		gen.writeStartObject();
-		gen.writeStringField("APIKey", this.ivle.apiKey);
-		gen.writeStringField("AuthToken", this.ivle.authToken);
+		gen.writeStringField("APIKey", ivle.apiKey);
+		gen.writeStringField("AuthToken", ivle.authToken);
 		gen.writeStringField("EventTitle", eventTitle);
 		
 		// Optional stuff.
@@ -99,6 +99,17 @@ public class MyOrganizer extends IVLEObject {
 	}
 	
 	public String addEventPersonal(String eventTitle, String venue,
+			String eventDateTime, String description, String recurType,
+			String weeklyRecurEvery, String strDays, String recurTillDate)
+			throws IOException, JSONParserException, FailedLoginException,
+			NetworkErrorException {
+		return MyOrganizer.addEventPersonal(
+			this.ivle, eventTitle, venue, eventDateTime, description,
+			recurType, weeklyRecurEvery, strDays, recurTillDate
+		);
+	}
+	
+	public String addEventPersonal(String eventTitle, String venue,
 			String eventDateTime, String description)
 			throws IOException, JSONParserException, FailedLoginException,
 			NetworkErrorException {
@@ -111,9 +122,9 @@ public class MyOrganizer extends IVLEObject {
 	 * Deletes the Personal Event, and returns a boolean indicating the status
 	 * of the deletion.
 	 */
-	public boolean deleteEventPersonal(String eventID, boolean deleteAllRecurrence) 
-			throws IOException, JSONParserException, FailedLoginException,
-			NetworkErrorException {
+	public static boolean deleteEventPersonal(IVLE ivle, String eventID, 
+			boolean deleteAllRecurrence) throws IOException,
+			JSONParserException, FailedLoginException, NetworkErrorException {
 		// Create the JSON generator.
 		ByteArrayOutputStream out = new ByteArrayOutputStream();
 		JsonFactory factory = new JsonFactory();
@@ -121,8 +132,8 @@ public class MyOrganizer extends IVLEObject {
 		
 		// Generate the output.
 		gen.writeStartObject();
-		gen.writeStringField("APIKey", this.ivle.apiKey);
-		gen.writeStringField("AuthToken", this.ivle.authToken);
+		gen.writeStringField("APIKey", ivle.apiKey);
+		gen.writeStringField("AuthToken", ivle.authToken);
 		gen.writeStringField("EventID", eventID);
 		gen.writeBooleanField("DeleteAllRecurrence", deleteAllRecurrence);
 		gen.writeEndObject();
@@ -137,6 +148,23 @@ public class MyOrganizer extends IVLEObject {
 		List<?> resultList = (List<?>) data.get("Results");
 		boolean result = (Boolean) resultList.get(0);
 		return result;
+	}
+	
+	public static boolean deleteEventPersonal(IVLE ivle, String eventID)
+			throws IOException, JSONParserException, FailedLoginException,
+			NetworkErrorException {
+		return MyOrganizer.deleteEventPersonal(ivle, eventID, false);
+	}
+	
+	public boolean deleteEventPersonal(String eventID, boolean deleteAllRecurrence) 
+			throws IOException, JSONParserException, FailedLoginException,
+			NetworkErrorException {
+		return MyOrganizer.deleteEventPersonal(this.ivle, eventID, deleteAllRecurrence);
+	}
+	
+	public boolean deleteEventPersonal(String eventID) throws IOException,
+			JSONParserException, FailedLoginException, NetworkErrorException {
+		return MyOrganizer.deleteEventPersonal(this.ivle, eventID, false);
 	}
 	
 	/**
