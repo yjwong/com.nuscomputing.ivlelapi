@@ -330,20 +330,19 @@ public class IVLE {
 			throws JSONParserException, FailedLoginException, 
 			NetworkErrorException {
 		// Prepare the request.
+		Map<String, String> urlParams = new HashMap<String, String>();
+		urlParams.put("Duration", Integer.toString(duration));
 		URL url;
 		switch (type) {
 			case STAFF:
-				url = IVLE.prepareURL(this, "Modules_Staff", null);
+				url = IVLE.prepareURL(this, "Modules_Staff", urlParams);
 				break;
 			case STUDENT:
-				url = IVLE.prepareURL(this, "Modules_Student", null);
+				url = IVLE.prepareURL(this, "Modules_Student", urlParams);
 				break;
 			default:
-				url = IVLE.prepareURL(this, "Modules", null);
+				url = IVLE.prepareURL(this, "Modules", urlParams);
 		}
-		
-		Map<String, String> urlParams = new HashMap<String, String>();
-		urlParams.put("Duration", Integer.toString(duration));
 		Request request = new Request(url);
 		
 		// Execute the request.
@@ -468,6 +467,15 @@ public class IVLE {
 	public OpenWebcast[] getOpenWebcasts() throws FailedLoginException,
 			NetworkErrorException, JSONParserException {
 		return this.getOpenWebcasts(false, null, null, null);
+	}
+	
+	/**
+	 * Method: getMyOrganizer
+	 * <p>
+	 * Returns the IVLE organizer.
+	 */
+	public MyOrganizer getMyOrganizer() {
+		return new MyOrganizer(this);
 	}
 	
 	/**
