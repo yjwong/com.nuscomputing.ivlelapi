@@ -16,6 +16,9 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.nuscomputing.ivlelapi.IVLE;
+import com.nuscomputing.ivlelapi.MyOrganizer;
+import com.nuscomputing.ivlelapi.MyOrganizer.AcadSemesterInfo;
+import com.nuscomputing.ivlelapi.MyOrganizer.SpecialDay;
 
 /**
  * Test suite for IVLE base class.
@@ -29,7 +32,7 @@ public class IVLETest {
 	protected static String APIKEY = "UMvnz7ETKJ0oTWOX4zORt";
 	
 	/** The authentication token associated with the API key */
-	protected static String AUTHTOKEN = "E575FFC2FA1EAA40AA7B4DEE2AA872B44EC29D5DE3C1C5224EAEA2F9D3F1C334830839A33A71C78943E0F2014F49F26EB76BB03A253040E4D57604083F1F1110A3ACB951FFF3D2FBB51152BBFC00092F54ECCB32D7868B646F95AAA2D8C8647D356DC14591E1F8EF33FA41EF4DFD7D36990C11909BB1C2B4E61F8F932A7FFE818FE1ACA4AA7841DE4A389DAB48B7FFEFC04F4665211CEC2583A7B100793053DEC67C384046E16864315B60677BC0D9DBF95FC1344952CA2F73F8686F29A2E3F06977BC4B6C9E86A32E4CD9B895E90335";
+	protected static String AUTHTOKEN = "B83E39C72937B871084DF64BFD6CCADEB1D59240134476F45C3D6E9201748F4D346EA5A36BB0EFC39C889E8B1382F858A620CE5CC462A9BD4D994EB53CEEA152B90A754386262163C26405E140CF166D2732E05468F6F2B32B94535AE4D5D7AD73CF6BF012E733E6DFC5C8749056FEB9AE464FF53F3A9544823DBD0D23E8337D540D3532BBAC840EEFBB3542E35AC3C76A994D9F5B1DFA5507BFA2874FDFF43E04FD81AC9DA3876913F88966B0752CA546267413C5F2B4D0FBD37DEB163EE16440DCD678020894D51D1D8A80B0AFD79F";
 	
 	// }}}
 	// {{{ methods
@@ -67,7 +70,7 @@ public class IVLETest {
 	public void testIVLE() throws Exception {
 		@SuppressWarnings("unused")
 		IVLE ivle = new IVLE(IVLETest.APIKEY, IVLETest.AUTHTOKEN);
-		ivle = new IVLE(IVLETest.APIKEY, "A0088826", "j^jN6e78");
+		ivle = new IVLE(IVLETest.APIKEY, "A0088826", "j^jN6e77");
 	}
 	
 	/**
@@ -148,6 +151,65 @@ public class IVLETest {
 		assertTrue(ivle.getModulesStudent() != null);
 		assertTrue(ivle.getModulesStudent(0) != null);
 		assertTrue(ivle.getModulesStudent(100) != null);
+	}
+	
+	/**
+	 * Method: testGetSpecialDays
+	 * <p>
+	 * Test to get the special days on IVLE.
+	 */
+	@Test
+	public void testGetSpecialDays() throws Exception {
+		IVLE ivle = new IVLE(IVLETest.APIKEY, IVLETest.AUTHTOKEN);
+		MyOrganizer organizer = ivle.getMyOrganizer();
+		SpecialDay[] days = organizer.getSpecialDays("13-Aug-2012", "13-Aug-2013");
+		for (SpecialDay day : days) {
+			System.out.print("description = ".concat(day.description).concat(", "));
+			System.out.print("type = ".concat(day.type).concat(", "));
+			System.out.print("startDate = ".concat(day.startDate.toString()).concat(", "));
+			System.out.println("endDate = ".concat(day.endDate.toString()));
+		}
+	}
+	
+	/**
+	 * Method: testGetAcadSemesterInfo
+	 * <p>
+	 * Test to get the academic semester information.
+	 */
+	@Test
+	public void testGetAcadSemesterInfo() throws Exception {
+		IVLE ivle = new IVLE(IVLETest.APIKEY, IVLETest.AUTHTOKEN);
+		MyOrganizer organizer = ivle.getMyOrganizer();
+		AcadSemesterInfo[] info = organizer.getAcadSemesterInfo("2012/2013", "1");
+		for (AcadSemesterInfo acadSem : info) {
+			System.out.print("acadYear = ".concat(acadSem.acadYear).concat(", "));
+			System.out.print("evenOddWeek = ".concat(acadSem.evenOddWeek).concat(", "));
+			System.out.print("lectureStartDate = ".concat(acadSem.lectureStartDate.toString()).concat(", "));
+			System.out.print("semester = ".concat(acadSem.semester).concat(", "));
+			System.out.print("semesterEndDate = ".concat(acadSem.semesterEndDate.toString()).concat(", "));
+			System.out.print("semesterStartDate = ".concat(acadSem.semesterStartDate.toString()).concat(", "));
+			System.out.print("tutorialStartDate = ".concat(acadSem.tutorialStartDate.toString()).concat(", "));
+			System.out.print("typeName = ".concat(acadSem.typeName).concat(", "));
+			System.out.print("weekTypeEndDate = ".concat(acadSem.weekTypeEndDate.toString()).concat(", "));
+			System.out.println("weekTypeStartDate = ".concat(acadSem.weekTypeStartDate.toString()));
+		}
+	}
+	
+	/**
+	 * Method: testEventPersonal
+	 * <p>
+	 * Test to add a personal event.
+	 */
+	@Test
+	public void testEventPersonal() throws Exception {
+		IVLE ivle = new IVLE(IVLETest.APIKEY, IVLETest.AUTHTOKEN);
+		MyOrganizer organizer = ivle.getMyOrganizer();
+		String id = organizer.addEventPersonal("Test", null, null, null, null, null, null, null);
+		System.out.println("event added with id = " + id);
+		
+		// Remove the event.
+		Boolean result = organizer.deleteEventPersonal(id, true);
+		System.out.println("event deleted with result = " + result.toString());
 	}
 	
 	/**
