@@ -19,6 +19,7 @@ import com.nuscomputing.ivlelapi.IVLE;
 import com.nuscomputing.ivlelapi.MyOrganizer;
 import com.nuscomputing.ivlelapi.MyOrganizer.AcadSemesterInfo;
 import com.nuscomputing.ivlelapi.MyOrganizer.SpecialDay;
+import com.nuscomputing.ivlelapi.StudentEvent;
 
 /**
  * Test suite for IVLE base class.
@@ -192,6 +193,21 @@ public class IVLETest {
 			System.out.print("typeName = ".concat(acadSem.typeName).concat(", "));
 			System.out.print("weekTypeEndDate = ".concat(acadSem.weekTypeEndDate.toString()).concat(", "));
 			System.out.println("weekTypeStartDate = ".concat(acadSem.weekTypeStartDate.toString()));
+		}
+	}
+	
+	/**
+	 * Method: testStudentEvent
+	 * <p>
+	 * Test for student events.
+	 */
+	@Test
+	public void testStudentEvent() throws Exception {
+		IVLE ivle = new IVLE(IVLETest.APIKEY, IVLETest.AUTHTOKEN);
+		StudentEvent[] events = ivle.getStudentEvents();
+		for (StudentEvent event : events) {
+			System.out.print("title = ".concat(event.title).concat(", "));
+			System.out.println("description = ".concat(event.description));
 		}
 	}
 	

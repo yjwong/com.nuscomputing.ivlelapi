@@ -372,6 +372,123 @@ public class Module extends IVLEObject {
 	}
 	
 	/**
+	 * Method: getGroups
+	 * <p>
+	 * Gets all the related groups for the user's module.
+	 * <p>
+	 * It retrives class groups, lecture groups, tutorial groups, lab groups
+	 * and sectional groups. Project groups are excluded.
+	 */
+	public Group[] getGroups(String acadYear, String semester)
+			throws NetworkErrorException, JSONParserException,
+			FailedLoginException {
+		// Check courseID.
+		if (this.ID == null || this.ID.length() == 0) {
+			throw new IllegalStateException();
+		}
+		
+		// Prepare the request.
+		Map<String, String> params = new HashMap<String, String>();
+		params.put("CourseID", this.ID);
+		params.put("AcadYear", acadYear);
+		params.put("Semester", semester);
+		URL url = IVLE.prepareURL(this.ivle, "GroupsByUserAndModule", params);
+		
+		// Execute the request.
+		Request request = new Request(url);
+		Map<?, ?> data = request.execute().data;
+		List<?> groupList = (List<?>) data.get("Results");
+		
+		// Run through the groupList, generating a new Group each iteration.
+		Group[] g = new Group[groupList.size()];
+		for (int i = 0; i < groupList.size(); i++) {
+			g[i] = new Group(this.ivle, (Map<?, ?>) groupList.get(i));
+		}
+		
+		return g;
+	}
+	
+	/**
+	 * Method: getGroupsClass
+	 * <p>
+	 * Gets all class groups for the user's module.
+	 * <p>
+	 * The flag can be "E" - all class groups, or "A" - class groups available
+	 * for self-enrolment.
+	 */
+	public Group[] getGroupsClass(String flag) throws NetworkErrorException,
+			JSONParserException, FailedLoginException {
+		// Check courseID.
+		if (this.ID == null || this.ID.length() == 0) {
+			throw new IllegalStateException();
+		}
+		
+		// Prepare the request.
+		Map<String, String> params = new HashMap<String, String>();
+		params.put("CourseID", this.ID);
+		params.put("flag", flag);
+		URL url = IVLE.prepareURL(this.ivle, "Module_ClassGroups", params);
+		
+		// Execute the request.
+		Request request = new Request(url);
+		Map<?, ?> data = request.execute().data;
+		List<?> groupList = (List<?>) data.get("Results");
+		
+		// Run through the groupList, generating a new Group each iteration.
+		Group[] g = new Group[groupList.size()];
+		for (int i = 0; i < groupList.size(); i++) {
+			g[i] = new Group(this.ivle, (Map<?, ?>) groupList.get(i));
+		}
+		
+		return g;
+	}
+	
+	/**
+	 * Method: getGroupProjects
+	 * <p>
+	 * Gets group projects for a module that are accessible to the current
+	 * user.
+	 * <p>
+	 * The groupType can be either "E" - all (for staff) or enrolled (for
+	 * student) project groups or "A" - project groups available for
+	 * self-enrollment.
+	 */
+	public Project[] getGroupProjects(boolean includeGroups, String groupType)
+			throws NetworkErrorException, JSONParserException,
+			FailedLoginException {
+		// Check courseID.
+		if (this.ID == null || this.ID.length() == 0) {
+			throw new IllegalStateException();
+		}
+		
+		// Check grouptype.
+		if (groupType != "E" && groupType != "A") {
+			throw new IllegalArgumentException("groupType must be either E or A");
+		}
+		
+		// Prepare the request.
+		Map<String, String> params = new HashMap<String, String>();
+		params.put("CourseID", this.ID);
+		params.put("IncludeGroups", Boolean.toString(includeGroups));
+		params.put("GroupType", groupType);
+		URL url = IVLE.prepareURL(this.ivle, "GroupProjectsByUser", params);
+		
+		// Execute the request.
+		Request request = new Request(url);
+		Map<?, ?> data = request.execute().data;
+		List<?> projectList = (List<?>) data.get("Results");
+		
+		// Run through the groupList, generating a new Group each iteration.
+		Project[] p = new Project[projectList.size()];
+		for (int i = 0; i < projectList.size(); i++) {
+			p[i] = new Project(this.ivle, (Map<?, ?>) projectList.get(i));
+			if (includeGroups) { p[i].setFlag(Project.FLAG_INCLUDE_GROUPS); }
+		}
+		
+		return p;
+	}
+	
+	/**
 	 * Method: getGuestRoster
 	 * <p>
 	 * Gets the related guest roster. The guest roster is the list of guests
@@ -696,6 +813,61 @@ public class Module extends IVLEObject {
 		// Parse the response.
 		List<?> timetableSlotList = (List<?>) data.get("Results");
 		return new TimetableExam(this.ivle, timetableSlotList);
+	}
+	
+	/**
+	 * Method: getUsersByClassGroups
+	 * <p>
+	 * Gets the list of students for the specific class group for the user's
+	 * module.
+	 */
+	public User[] getUsersByClassGroups(String classGroupID) throws
+			NetworkErrorException, JSONParserException, FailedLoginException {
+		// Prepare the request.
+		Map<String, String> params = new HashMap<String, String>();
+		params.put("ClassGroupID", classGroupID);
+		URL url = IVLE.prepareURL(this.ivle, "Module_ClassGroupUsers", params);
+		
+		// Execute the request.
+		Request request = new Request(url);
+		Map<?, ?> data = request.execute().data;
+		List<?> userList = (List<?>) data.get("Results");
+		
+		// Run through the userList, generating a new User each iteration.
+		User[] u = new User[userList.size()];
+		for (int i = 0; i < userList.size(); i++) {
+			u[i] = new User(this.ivle, (Map<?, ?>) userList.get(i));
+		}
+		
+		return u;
+	}
+	
+	/**
+	 * Method: getUsersByOfficialGroup
+	 * <p>
+	 * Gets the list of students for the specific official group for the user's
+	 * module.
+	 */
+	public User[] getUsersByOfficialGroup(String groupName, String groupType)
+			throws NetworkErrorException, JSONParserException, FailedLoginException {
+		// Prepare the request.
+		Map<String, String> params = new HashMap<String, String>();
+		params.put("GroupName", groupName);
+		params.put("GroupType", groupType);
+		URL url = IVLE.prepareURL(this.ivle, "Module_OfficialGroupUsers", params);
+		
+		// Execute the request.
+		Request request = new Request(url);
+		Map<?, ?> data = request.execute().data;
+		List<?> userList = (List<?>) data.get("Results");
+		
+		// Run through the userList, generating a new User each iteration.
+		User[] u = new User[userList.size()];
+		for (int i = 0; i < userList.size(); i++) {
+			u[i] = new User(this.ivle, (Map<?, ?>) userList.get(i));
+		}
+		
+		return u;
 	}
 	
 	/**

@@ -17,9 +17,6 @@ import com.fasterxml.jackson.core.JsonGenerator;
  * @author yjwong
  */
 public class MyOrganizer extends IVLEObject {
-	// {{{ properties
-	
-	// }}}
 	// {{{ methods
 	
 	/**
@@ -144,7 +141,7 @@ public class MyOrganizer extends IVLEObject {
 		Request request = new Request(url, Request.Type.POST, out);
 		
 		// Execute the request.
-		Map<?, ?> data = (request.execute().data);
+		Map<?, ?> data = request.execute().data;
 		List<?> resultList = (List<?>) data.get("Results");
 		boolean result = (Boolean) resultList.get(0);
 		return result;
